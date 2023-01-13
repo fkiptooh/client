@@ -9,7 +9,7 @@ const Header_to_reconsider = () => {
 
     const navigate =  useNavigate();
     let dispatch = useDispatch();
-    let user = useSelector((state)=>({...state.userReducer}))
+    let user = useSelector((state)=>(state))
 
     const onClick = (e) => {
         if(e.key === 'logout'){
@@ -29,7 +29,7 @@ const Header_to_reconsider = () => {
             (<Menu 
             mode='horizontal'
             onClick={onClick}
-            items ={ !user && ([
+            items ={ !user.user && ([
                 {
                     label: <span>Home</span>,
                     key: 'home',
@@ -46,7 +46,7 @@ const Header_to_reconsider = () => {
                      icon: <UserOutlined />
                   },
             ]) || 
-             user &&(
+             user.user &&(
             [
               {
                 label: <span>Home</span>,
