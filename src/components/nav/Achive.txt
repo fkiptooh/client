@@ -1,0 +1,43 @@
+    // const items = [
+    //   {
+    //     label: 'Home',
+    //     key: 'home',
+    //     icon: <AppstoreOutlined />,
+    //   },
+    //   {
+    //     label: 'Username',
+    //     key: 'SubMenu',
+    //     icon: <SettingOutlined />,
+    //     children: [
+    //       {  
+    //         label: 'Option 1',
+    //         key: 'setting:1',
+    //       },
+    //       {
+    //         label: 'Option 2',
+    //         key: 'setting:2',
+    //       },
+    //       {
+    //         label: 'Logout',
+    //         key: 'logout',
+    //         icon: <UserOutlined/>,
+    //         // onClick: logout()
+    //       }
+    //     ],
+    //   },
+    //   {
+    //     label: <span>Register</span>,
+    //     key: 'register',
+    //     icon: <UserAddOutlined />,
+    //   //   disabled: true,
+    //   },
+    //   {
+    //      label: 'Login',
+    //      key: 'login',
+    //      icon: <UserOutlined />, 
+    //   },
+   
+    // ];
+
+
+    //return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} theme="light"/>
