@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
+import Protected from './components/routes/Protected';
 
 
 
@@ -12,9 +13,12 @@ import Register from './pages/auth/Register';
 import Home from './pages/Home';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import Header_to_reconsider from './components/nav/Header_to_reconsider';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import History from './pages/user/History';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
+import { currentUser } from './functions/auth';
 
 
 const App=()=> {
@@ -26,14 +30,18 @@ const App=()=> {
       if(user){
         const idTokenResult = await user.getIdTokenResult();
         console.log(user);
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: idTokenResult.token
-          }
-          
+        currentUser(idTokenResult.token).then((res)=> {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id
+            },
         });
+        }).catch(err=>console.log(err));
       }
     });
     // clean up
@@ -52,6 +60,13 @@ const App=()=> {
           <Route path='/register' element={<Register/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/register/complete' element={<RegisterComplete/>}/>
+          <Route path='/forgot/password' element={<ForgotPassword/>}/>
+          <Route path="/user/history/*" element= { <Protected>
+            <History/>
+          </Protected>}
+              // <Protected element= {
+              //   <History/>}/>}
+              />
         </Routes>
       </>
       </BrowserRouter>

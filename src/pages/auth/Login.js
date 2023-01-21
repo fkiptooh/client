@@ -1,18 +1,33 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { auth, googleAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { createOrUpdateUser } from "../../functions/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("fkiptooh.r@gmail.com");
   const [password, setPassword] = useState("123456");
   const [loading, setLoading] = useState(false);
   let dispatch = useDispatch();
-  //let state = useSelector((state)=>(state));
-  const navigate = useNavigate();
+  const {user} = useSelector((state)=>({...state}))
+  const navigate = useNavigate()
+
+  const roleBasedRedirect = (res) => {
+  if(res.data.role === 'admin'){
+    navigate("/admin/dashboard");
+  } else {
+    navigate("/user/history");
+  }
+}
+
+  useEffect(()=>{
+      if(user && user.token) navigate("/");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[user]) 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,14 +39,21 @@ const Login = () => {
 
         const {user} = result;
         const idTokenResult = await user.getIdTokenResult();
-
-        dispatch({
+        createOrUpdateUser(idTokenResult.token).then((res)=> {
+          dispatch({
             type: "LOGGED_IN_USER",
             payload: {
-                email: user.email,
-                token: idTokenResult.token
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id
             },
         });
+        roleBasedRedirect(res);
+        })
+        // console.log("Create or update res", res)
+        .catch();
         navigate("/");
     }catch(error){
         console.log(error);
@@ -45,13 +67,19 @@ const Login = () => {
         async (result)=>{
             const {user} = result;
             const idTokenResult = await user.getIdTokenResult();
-            dispatch({
+            createOrUpdateUser(idTokenResult.token).then((res)=> {
+              dispatch({
                 type: "LOGGED_IN_USER",
                 payload: {
-                    email: user.email,
-                    token: idTokenResult.token
+                    name: res.data.name,
+                    email: res.data.email,
+                    token: idTokenResult.token,
+                    role: res.data.role,
+                    _id: res.data._id
                 },
             });
+            roleBasedRedirect(res);
+            }).catch(err=>console.log(err));
             navigate("/");
         }
     ).catch((err) => {
@@ -115,6 +143,10 @@ const Login = () => {
         >
             Login in with Google Account
       </Button>
+
+      <Link to="/forgot/password" className="float-right text-danger">
+        Forgot Password
+      </Link>
         </div>
       </div>
     </div>
