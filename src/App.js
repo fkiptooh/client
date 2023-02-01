@@ -15,6 +15,7 @@ import RegisterComplete from './pages/auth/RegisterComplete';
 import Header_to_reconsider from './components/nav/Header_to_reconsider';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import History from './pages/user/History';
+import UnauthorizedPage from './pages/UnauthorizedPage';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -61,12 +62,17 @@ const App=()=> {
           <Route path='/login' element={<Login/>}/>
           <Route path='/register/complete' element={<RegisterComplete/>}/>
           <Route path='/forgot/password' element={<ForgotPassword/>}/>
-          <Route path="/user/history/*" element= { <Protected>
-            <History/>
-          </Protected>}
-              // <Protected element= {
-              //   <History/>}/>}
-              />
+          {/* <Route path="/user/history/" 
+          element= { 
+              <Protected>
+                <History/>
+              </Protected>
+            }
+          /> */}
+          <Route element={<Protected/>}>
+            <Route path='/user/history' element={<History/>}/>
+          </Route>
+          <Route path="/401" element={<UnauthorizedPage/>}/>
         </Routes>
       </>
       </BrowserRouter>

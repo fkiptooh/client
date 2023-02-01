@@ -80,7 +80,7 @@ const Login = () => {
             });
             roleBasedRedirect(res);
             }).catch(err=>console.log(err));
-            navigate("/");
+           // navigate("/");
         }
     ).catch((err) => {
         console.log(err);
