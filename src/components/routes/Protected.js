@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 import LoadingToRedirect from "./LoadingToRedirect";
 
 const Protected = () => {
-    const user = useSelector((state)=>({...state}));
-    console.log(user)
+    const user = useSelector((state)=>state.user);
 
-    return (user ? <Outlet/> : <LoadingToRedirect/>)
+    return (user ?  <Outlet/>:  <LoadingToRedirect/>);
   };
 
 export default Protected;
