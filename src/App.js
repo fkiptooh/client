@@ -16,6 +16,8 @@ import Header_to_reconsider from './components/nav/Header_to_reconsider';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import History from './pages/user/History';
 import UnauthorizedPage from './pages/UnauthorizedPage';
+import Password from './pages/user/Password';
+import Wishlist from './pages/user/Wishlist';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -71,6 +73,8 @@ const App=()=> {
           /> */}
           <Route element={<Protected/>}>
             <Route path='/user/history' element={<History/>}/>
+            <Route path='/user/password' element={<Password/>}/>
+            <Route path='/user/wishlist' element={<Wishlist/>}/>
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
         </Routes>
