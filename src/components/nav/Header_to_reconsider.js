@@ -11,11 +11,7 @@ const Header_to_reconsider = () => {
 
     const navigate =  useNavigate();
     let dispatch = useDispatch();
-<<<<<<< HEAD
     let user = useSelector((state)=>({...state}))
-=======
-    let user = useSelector((state)=>(state))
->>>>>>> refs/remotes/origin/master
 
     const onClick = (e) => {
         if(e.key === 'logout'){
@@ -78,7 +74,6 @@ const Header_to_reconsider = () => {
           style={{ display: "flex", flex: 1, justifyContent: "flex-end" }}
           items={[
             {
-<<<<<<< HEAD
               label: <span style={{ textAlign: "right" }}>Register</span>,
               key: "register",
               icon: <UserAddOutlined />,
@@ -224,65 +219,6 @@ const Header_to_reconsider = () => {
     //               }
     //             ],
     //           },
-=======
-            (<Menu 
-            mode='horizontal'
-            onClick={onClick}
-            items ={ !user.user && ([
-                {
-                    label: <span>Home</span>,
-                    key: 'home',
-                    icon: <AppstoreOutlined />,
-                  },
-                  {
-                    label: <span>Register</span>,
-                    key: 'register',
-                    icon: <UserAddOutlined />,
-                  },
-                  {
-                     label: <span>Login</span>,
-                     key: 'login',
-                     icon: <UserOutlined />
-                  },
-            ]) || 
-             user.user &&(
-            [
-              {
-                label: <span>Home</span>,
-                key: 'home',
-                icon: <AppstoreOutlined />,
-              },
-            //   {
-            //     label: <span>Register</span>,
-            //     key: 'register',
-            //     icon: <UserAddOutlined />,
-            //   },
-            //   {
-            //      label: <span>Login</span>,
-            //      key: 'login',
-            //      icon: <UserOutlined />
-            //   },
-              {
-                label: <span> Username </span>,
-                key: 'SubMenu',
-                icon: <SettingOutlined />,
-                children: [
-                  {  
-                    label: 'Option 1',
-                    key: 'setting:1',
-                  },
-                  {
-                    label: 'Option 2',
-                    key: 'setting:2',
-                  },
-                  {
-                    label: 'Logout',
-                    key: 'logout',
-                    icon: <UserOutlined/>,
-                  }
-                ],
-              },
->>>>>>> refs/remotes/origin/master
            
     //         ])
     //         }
