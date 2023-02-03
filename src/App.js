@@ -18,6 +18,8 @@ import History from './pages/user/History';
 import UnauthorizedPage from './pages/UnauthorizedPage';
 import Password from './pages/user/Password';
 import Wishlist from './pages/user/Wishlist';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminRoute from './components/routes/AdminRoute';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -64,17 +66,13 @@ const App=()=> {
           <Route path='/login' element={<Login/>}/>
           <Route path='/register/complete' element={<RegisterComplete/>}/>
           <Route path='/forgot/password' element={<ForgotPassword/>}/>
-          {/* <Route path="/user/history/" 
-          element= { 
-              <Protected>
-                <History/>
-              </Protected>
-            }
-          /> */}
           <Route element={<Protected/>}>
             <Route path='/user/history' element={<History/>}/>
             <Route path='/user/password' element={<Password/>}/>
             <Route path='/user/wishlist' element={<Wishlist/>}/>
+          </Route>
+          <Route element={<AdminRoute/>}>
+            <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
         </Routes>
