@@ -63,10 +63,10 @@ const Header_to_reconsider = () => {
               { 
                 label: <span onClick={onDashClick}>Dashboard</span>,
               },
-              {
-                label: "Option 2",
-                key: "setting:2",
-              },
+              // {
+              //   label: "Option 2",
+              //   key: "setting:2",
+              // },
               {
                 label: "Logout",
                 key: "logout",

@@ -20,6 +20,8 @@ import Password from './pages/user/Password';
 import Wishlist from './pages/user/Wishlist';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminRoute from './components/routes/AdminRoute';
+import CategoryCreate from './pages/admin/category/CategoryCreate';
+import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -73,6 +75,8 @@ const App=()=> {
           </Route>
           <Route element={<AdminRoute/>}>
             <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
+            <Route path='/admin/category' element={<CategoryCreate/>}/>
+            <Route path='/admin/category/:slug' element={<CategoryUpdate/>}/>
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
         </Routes>
