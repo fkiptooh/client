@@ -21,10 +21,20 @@ const Header_to_reconsider = () => {
                   payload: null
                 });
                 navigate("/login");
-        }else{
-            navigate(`/${e.key}`);
-        }
+        }        
+         else if(e.key==='home'){
+          navigate(`/${e.key}`);
+      }
     };
+
+    const onDashClick =()=>{
+      if(user.user.role==='admin'){
+        navigate('/admin/dashboard');
+      }
+      else {
+        navigate('/user/history');
+      }
+    }
 
     const shouldShowLoginAndRegister = true;
   return (
@@ -50,9 +60,8 @@ const Header_to_reconsider = () => {
             label: <span>{user.user.email && user.user.email.split('@')[0]}</span>,
             icon: <SettingOutlined />,
             children: [
-              {
-                label: "Option 1",
-                key: "setting:1",
+              { 
+                label: <span onClick={onDashClick}>Dashboard</span>,
               },
               {
                 label: "Option 2",
