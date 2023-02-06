@@ -22,6 +22,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminRoute from './components/routes/AdminRoute';
 import CategoryCreate from './pages/admin/category/CategoryCreate';
 import CategoryUpdate from './pages/admin/category/CategoryUpdate';
+import SubCategory from './pages/admin/subcategory/SubCategoryCreate';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -77,6 +78,7 @@ const App=()=> {
             <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
             <Route path='/admin/category' element={<CategoryCreate/>}/>
             <Route path='/admin/category/:slug' element={<CategoryUpdate/>}/>
+            <Route path='/admin/subcategory' element={<SubCategory/>}/>
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
         </Routes>

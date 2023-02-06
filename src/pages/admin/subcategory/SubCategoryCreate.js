@@ -2,39 +2,46 @@ import React,{useState, useEffect} from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import {toast} from "react-toastify";
 import { useSelector } from "react-redux";
-import {createCategory, getCategories, removeCategory} from "../../../functions/category"
+import { getCategories } from "../../../functions/category";
+import {createSubcategory, getSubcategories, removeSubcategory, getSubcategory} from "../../../functions/subcategory"
 import { Link } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons'
 import CategoryForm from "../../../components/forms/CategoryForm";
 import LocalSearch from "../../../components/forms/LocalSearch";
 
-const CategoryCreate =()=>{
+const SubCategory =()=>{
     const [name, setName] = useState('');
     const [loading, setLoading]= useState(false);
     const {user} = useSelector((state)=>({...state}))
     const [categories, setCategories] = useState([]);
+    const [category, setCategory] = useState('');
+    const [subcategories, setSubcategories] = useState([]);
 
     // creating a search/filter functionality
     // step 1
-    const [keyword, setKeyword] = useState("");
+    const [keyword, setKeyword] = useState([]);
 
     useEffect(()=>{
         loadCategories();
+        loadSubcategories();
     },[]);
 
     const loadCategories =()=>
         getCategories().then((c)=>setCategories(c.data));
+
+    const loadSubcategories =()=>
+        getSubcategories().then((s)=>setSubcategories(s.data));
     
     const handleRemove=async(slug)=>{
         // let answer = window.confirm('Delete?')
         // console.log(answer, slug);
         if(window.confirm("Delete?")){
             setLoading(true);
-            removeCategory(slug, user.token)
+            removeSubcategory(slug, user.token)
             .then(res=>{
                 setLoading(false)
                 toast.error(`${res.data.name} is deleted`)
-                loadCategories()
+                loadSubcategories();
             })
             .catch((err)=>{
                 if(err.response.status===400){
@@ -50,12 +57,12 @@ const CategoryCreate =()=>{
     const handleSubmit=(e)=>{
         e.preventDefault();
         setLoading(true);
-        createCategory({name}, user.token)
+        createSubcategory({name, parent: category}, user.token)
         .then(res=>{
             setLoading(false)
             setName('')
             toast.success(`"${res.data.name}" is created`)
-            loadCategories()
+            loadSubcategories();
         })
         .catch((err)=>{
             setLoading(false)
@@ -71,8 +78,28 @@ const CategoryCreate =()=>{
             <div className="col-md-2">
                 <AdminNav/>
             </div>
-            <div className="col">
-                {loading? <h4 className="text-danger">Loading</h4>: <h4>Create Category</h4>}
+            <div className="col-md-10">
+                {loading? <h4 className="text-danger">Loading</h4>: <h4>Create Sub-Category</h4>}
+                <div className="form-group">
+                    <label>Parent Category</label>
+                    <select 
+                        name="category" 
+                        className="form-control"
+                        onChange={(e)=>setCategory(e.target.value)}
+                        >
+                        <option>Please Select Category</option>
+                        {categories.length>0 && 
+                            categories.map((c)=>
+                            (<option 
+                                key={c._id} 
+                                value={c._id}
+                                >
+                                {c.name}
+                            </option>))
+                        }
+                    </select>
+                </div>
+                {/* {JSON.stringify(category)} */}
                 <CategoryForm 
                     handleSubmit={handleSubmit}
                     name={name}
@@ -81,15 +108,15 @@ const CategoryCreate =()=>{
                     {/* Step 2  and step 3 refactored to this component*/}
                     <LocalSearch keyword={keyword} setKeyword={setKeyword}/>
                 {/* step 5 */}
-                {categories.filter(searched(keyword)).map((c)=>(
-                    <div key={c._id} className="alert alert-primary">
-                        {c.name}
+                {subcategories.filter(searched(keyword)).map((s)=>(
+                    <div key={s._id} className="alert alert-primary">
+                        {s.name}
                         <span 
-                            onClick={()=> handleRemove(c.slug)} 
+                            onClick={()=> handleRemove(s.slug)} 
                             className="btn btn-sm float-right">
                             <DeleteOutlined className="text-danger"/>
                         </span>
-                        <Link to={`/admin/category/${c.slug}`}>
+                        <Link to={`/admin/subcategory/${s.slug}`}>
                             <span className="btn btn-sm float-right">
                                 <EditOutlined className="text-warning"/>
                             </span>
@@ -104,4 +131,4 @@ const CategoryCreate =()=>{
 
 }
 
-export default CategoryCreate;
+export default SubCategory;
