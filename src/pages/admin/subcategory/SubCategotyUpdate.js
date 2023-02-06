@@ -71,7 +71,7 @@ const SubCategoryUpdate =()=>{
                             (<option 
                                 key={c._id} 
                                 value={c._id}
-                                selected={c._id === parent}
+                                selected={c._id===parent}
                                 >
                                 {c.name}
                             </option>))

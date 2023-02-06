@@ -24,6 +24,7 @@ import CategoryCreate from './pages/admin/category/CategoryCreate';
 import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 import SubCategory from './pages/admin/subcategory/SubCategoryCreate';
 import SubCategoryUpdate from './pages/admin/subcategory/SubCategotyUpdate';
+import ProductCreate from './pages/admin/product/ProductCreate';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -81,6 +82,7 @@ const App=()=> {
             <Route path='/admin/category/:slug' element={<CategoryUpdate/>}/>
             <Route path='/admin/subcategory' element={<SubCategory/>}/>
             <Route path='/admin/subcategory/:slug' element={<SubCategoryUpdate/>}/>
+            <Route path='/admin/product' element={<ProductCreate/>}/>
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
         </Routes>
