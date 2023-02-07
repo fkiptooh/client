@@ -1,6 +1,16 @@
 import React from "react";
+import { Select } from 'antd'
+const Option = Select;
 
-const ProductCreateForm =({handleSubmit, handleChange, values})=>{
+const ProductCreateForm =({
+                            handleSubmit, 
+                            handleChange, 
+                            values, 
+                            handleCategoryChange,
+                            subcategoryOption,
+                            showSubcategories,
+                            setValues
+                        })=>{
     const { title, 
         description, 
         price, 
@@ -15,6 +25,7 @@ const ProductCreateForm =({handleSubmit, handleChange, values})=>{
         color,
         brand
     } = values;
+    
     return(
         <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -107,7 +118,46 @@ const ProductCreateForm =({handleSubmit, handleChange, values})=>{
                             }
                         </select>
                     </div>
-                    <button className="btn btn-outline-info">Save</button>
+                    <div className="form-group">
+                    <label>Category</label>
+                    <select 
+                        name="category" 
+                        className="form-control"
+                        onChange={handleCategoryChange}
+                        >
+                        <option>Please Select Category</option>
+                        {categories.length>0 && 
+                            categories.map((c)=>
+                            (<option 
+                                key={c._id} 
+                                value={c._id}
+                                >
+                                {c.name}
+                            </option>))
+                        }
+                    </select>
+                </div>
+            {  showSubcategories &&  (<div className="form-group">
+                    <label>Sub Category</label>
+                    <Select
+                        mode="multiple"
+                        style={{width: '100%'}}
+                        placeholder="Please select subcategory"
+                        value={subcategory}
+                        onChange={value => setValues({...values, subcategory: value})}
+                        allowClear                       
+                    >
+                            {subcategoryOption.length && 
+                            subcategoryOption.map((s)=>(
+                                <Option key={s._id} value={s._id}>{s.name}</Option>
+                            ))}
+                        
+                    </Select>
+                </div>)}
+                {/* { JSON.stringify(values.subcategory)}
+                {subcategoryOption ? subcategoryOption.length : "No sub categories yet" } */}
+                <br/>
+                <button className="btn btn-outline-info">Save</button>
                 </form>
     )
 }

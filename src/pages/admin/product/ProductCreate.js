@@ -3,6 +3,7 @@ import AdminNav from "../../../components/nav/AdminNav";
 import {toast} from "react-toastify";
 import { useSelector } from "react-redux";
 import {createProduct} from "../../../functions/product"
+import { getCategories, getSubcategory } from "../../../functions/category";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 
 // creating an object to use in the state
@@ -24,9 +25,18 @@ const initialState = {
 
 const ProductCreate =()=> {
     const[values, setValues] = useState(initialState);
+    const[subcategoryOption, setsubcategoryOption] = useState([])
+    const[showSubcategories, setShowsubcatecories] = useState(false);
 
     // redux
     const {user} =  useSelector((state)=>({...state}));
+
+    useEffect(()=>{
+        loadCategories();
+    },[]);
+
+    const loadCategories =()=>
+        getCategories().then((c)=>setValues({...values, categories: c.data}));
 
     // destructuring the object for state component.
     const handleSubmit=(e)=>{
@@ -49,6 +59,17 @@ const ProductCreate =()=> {
         // console.log(e.target.name, "------>", e.target.value)
 
     }
+    const handleCategoryChange =(e)=> {
+        e.preventDefault();
+        console.log(`Clicked Category `, e.target.value)
+        setValues({...values, subcategory: [], category: e.target.value })
+        getSubcategory(e.target.value)
+        .then(res=>{
+            console.log("Sub categoty clicked", res)
+            setsubcategoryOption(res.data);
+        });
+        setShowsubcatecories(true)
+    }
     return(
         <div className="container-fluid">
             <div className="row">
@@ -59,10 +80,15 @@ const ProductCreate =()=> {
                     <h4>Create Product</h4>
                     <hr/>
                     {/* {JSON.stringify(values)} */}
+                    {/* {JSON.stringify(values.categories)} */}
                     <ProductCreateForm 
                         handleSubmit={handleSubmit}
                         handleChange={handleChange}
-                        values={values}/> 
+                        values={values}
+                        handleCategoryChange={handleCategoryChange}
+                        subcategoryOption={subcategoryOption}
+                        showSubcategories={showSubcategories}
+                        setValues={setValues}/> 
                 </div>
             </div>
         </div>
