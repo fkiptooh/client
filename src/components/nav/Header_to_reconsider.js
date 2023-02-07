@@ -21,7 +21,13 @@ const Header_to_reconsider = () => {
                   payload: null
                 });
                 navigate("/login");
-        }        
+        } 
+        if(e.key==='register'){
+          navigate(`/register`)
+        }
+        if(e.key ==='login'){
+          navigate("/login")
+        }      
          else if(e.key==='home'){
           navigate(`/${e.key}`);
       }
