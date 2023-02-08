@@ -25,6 +25,7 @@ import CategoryUpdate from './pages/admin/category/CategoryUpdate';
 import SubCategory from './pages/admin/subcategory/SubCategoryCreate';
 import SubCategoryUpdate from './pages/admin/subcategory/SubCategotyUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
+import AllProducts from './pages/admin/product/AllProducts';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -62,6 +63,7 @@ const App=()=> {
       <BrowserRouter>
       <>
       <Header_to_reconsider/>
+      {/* <Header/> */}
       <ToastContainer />
      
       <Routes>
@@ -83,6 +85,7 @@ const App=()=> {
             <Route path='/admin/subcategory' element={<SubCategory/>}/>
             <Route path='/admin/subcategory/:slug' element={<SubCategoryUpdate/>}/>
             <Route path='/admin/product' element={<ProductCreate/>}/>
+            <Route path='/admin/products' element={<AllProducts/>}/>
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
         </Routes>
