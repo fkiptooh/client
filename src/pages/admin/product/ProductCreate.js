@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import {createProduct} from "../../../functions/product"
 import { getCategories, getSubcategory } from "../../../functions/category";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
+import FileUpload from "../../../components/forms/FileUpload";
+import { LoadingOutlined } from "@ant-design/icons";
 
 // creating an object to use in the state
 const initialState = {
@@ -25,8 +27,9 @@ const initialState = {
 
 const ProductCreate =()=> {
     const[values, setValues] = useState(initialState);
-    const[subcategoryOption, setsubcategoryOption] = useState([])
+    const[subcategoryOption, setsubcategoryOption] = useState([]);
     const[showSubcategories, setShowsubcatecories] = useState(false);
+    const[loading, setLoading]= useState(false);
 
     // redux
     const {user} =  useSelector((state)=>({...state}));
@@ -79,8 +82,18 @@ const ProductCreate =()=> {
                 <div className="col-md-10">
                     <h4>Create Product</h4>
                     <hr/>
-                    {/* {JSON.stringify(values)} */}
+                     {/* {JSON.stringify(values.images)} */}
                     {/* {JSON.stringify(values.categories)} */}
+                    {loading? <LoadingOutlined className="text-warning h1" /> :
+                   
+                    <div className="p-3">
+                        <FileUpload
+                            values={values}
+                            setValues={setValues}
+                            setLoading={setLoading}
+                        />
+                    </div>
+                    }
                     <ProductCreateForm 
                         handleSubmit={handleSubmit}
                         handleChange={handleChange}
