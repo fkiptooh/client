@@ -7,8 +7,11 @@ import { getCategories, getSubcategory } from "../../../functions/category";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import FileUpload from "../../../components/forms/FileUpload";
 import { LoadingOutlined } from "@ant-design/icons";
+import { useParams } from "react-router-dom";
 
 const ProductUpdate =()=> {
+
+    let {slug} = useParams()
 
     // redux
     const {user} =  useSelector((state)=>({...state}));
@@ -21,6 +24,7 @@ const ProductUpdate =()=> {
                 </div>
                 <div className="col-md-10">
                     <h4>Update Product</h4>
+                    {JSON.stringify(slug)}
                     <hr/>
                 </div>
             </div>
