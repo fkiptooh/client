@@ -6,11 +6,18 @@ const ProductUpdateForm =({
                             handleSubmit, 
                             handleChange, 
                             values, 
+                            handleCategoryChange,
+                            categories,
+                            subcategoryOption,
+                            setValues,
+                            selectedCategory,
+                            arrayOfSubCategoryIds,
+                            setArryOfSubCategoryIds
                         })=>{
     const { title, 
         description, 
         price, 
-        categories, 
+        // categories, 
         category, 
         subcategory, 
         shipping, 
@@ -116,6 +123,43 @@ const ProductUpdateForm =({
                             }
                         </select>
                     </div>
+                    <div className="form-group">
+                    <label>Category</label>
+                    <select 
+                        name="category" 
+                        className="form-control"
+                        onChange={handleCategoryChange}
+                        value={selectedCategory ? selectedCategory : category._id}
+                        >
+                        {/* <option>{category ? category.name : 'Please select category'}</option> */}
+                        {categories.length>0 && 
+                            categories.map((c)=>
+                            (<option 
+                                key={c._id} 
+                                value={c._id}
+                                >
+                                {c.name}
+                            </option>))
+                        }
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label>Sub Category</label>
+                    <Select
+                        mode="multiple"
+                        style={{width: '100%'}}
+                        placeholder="Please select subcategory"
+                        value={subcategory}
+                        onChange={value => setValues({...values, subcategory: value})}
+                        allowClear                       
+                    >
+                            {subcategoryOption.length && 
+                            subcategoryOption.map((s)=>(
+                                <Option key={s._id} value={s._id}>{s.name}</Option>
+                            ))}
+                        
+                    </Select>
+                </div>
                 {/* { JSON.stringify(values.subcategory)}
                 {subcategoryOption ? subcategoryOption.length : "No sub categories yet" } */}
                 <br/>

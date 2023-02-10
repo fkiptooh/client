@@ -13,7 +13,7 @@ const initialState = {
     title: '',
     description:'',
     price: '',
-    categories: '',
+    // categories:'',
     category:'',
     subcategory: [],
     shipping:'',
@@ -28,6 +28,10 @@ const initialState = {
 const ProductUpdate =()=> {
     // state
     const[values, setValues] = useState(initialState);
+    const[subcategoryOption, setsubcategoryOption] = useState([])
+    const[categories, setCategories] = useState([]);
+    const[selectedCategory, setSelectedCategory] = useState("")
+    // const[arrayOfSubCategoryIds, setArryOfSubCategoryIds]= useState([]);
 
     let {slug} = useParams()
 
@@ -36,13 +40,27 @@ const ProductUpdate =()=> {
 
     useEffect(()=>{
         loadProduct();
+        loadCategories();
     }, []);
 
     const loadProduct=()=>{
         getProduct(slug)
         .then(p=> {
+            // load a single product
             setValues({...values, ...p.data})
             // console.log(p)
+            getSubcategory(p.data.category._id).then((res)=> {
+                setsubcategoryOption(res.data);
+            });
+            // prepare array of subcategories ids
+            // let arr = [];
+            
+            // p.data.subcategories.map((s)=> 
+            // {
+            //     arr.push(s.id)
+            // });
+            // console.log("arr", arr)
+            // setArryOfSubCategoryIds((prev)=> arr);
         });
     }
     const handleChange =(e)=>{
@@ -50,6 +68,30 @@ const ProductUpdate =()=> {
     }
     const handleSubmit=(e)=> {
         e.preventDefault();
+    }
+    const loadCategories =()=>
+    getCategories().then((c)=>{
+        setCategories(c.data)
+        // setCategories({...values, categories: c.data})
+    });
+
+    const handleCategoryChange =(e)=> {
+        e.preventDefault();
+        console.log(`Clicked Category `, e.target.value)
+        setValues({...values, subcategory: []})
+
+        setSelectedCategory(e.target.value);
+
+        getSubcategory(e.target.value)
+        .then(res=>{
+            console.log("Sub categoty clicked", res)
+            setsubcategoryOption(res.data);
+        });
+        // if admin return to the original product category, then reload the same subcategories for the product.
+        if(values.category._id === e.target.value){
+            loadProduct();
+        }
+        //setShowsubcatecories(true)
     }
     return(
         <div className="container-fluid">
@@ -63,6 +105,11 @@ const ProductUpdate =()=> {
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
                         values={values}
+                        handleCategoryChange={handleCategoryChange}
+                        categories={categories}
+                        subcategoryOption={subcategoryOption}
+                        setValues={setValues}
+                        selectedCategory={selectedCategory}
                     />
                     <hr/>
                 </div>
