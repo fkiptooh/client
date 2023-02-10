@@ -7,6 +7,7 @@ import { getCategories, getSubcategory } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
+import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
 
 const initialState = {
     title: '',
@@ -44,6 +45,12 @@ const ProductUpdate =()=> {
             // console.log(p)
         });
     }
+    const handleChange =(e)=>{
+        setValues({...values, [e.target.name]: e.target.value})
+    }
+    const handleSubmit=(e)=> {
+        e.preventDefault();
+    }
     return(
         <div className="container-fluid">
             <div className="row">
@@ -52,7 +59,11 @@ const ProductUpdate =()=> {
                 </div>
                 <div className="col-md-10">
                     <h4>Update Product</h4>
-                    {JSON.stringify(values)}
+                    <ProductUpdateForm 
+                        handleChange={handleChange}
+                        handleSubmit={handleSubmit}
+                        values={values}
+                    />
                     <hr/>
                 </div>
             </div>
