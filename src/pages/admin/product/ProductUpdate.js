@@ -2,11 +2,11 @@ import React,{useState, useEffect} from "react";
 import AdminNav from "../../../components/nav/AdminNav";
 import {toast} from "react-toastify";
 import { useSelector } from "react-redux";
-import {getProduct} from "../../../functions/product"
+import {getProduct, updateProduct } from "../../../functions/product"
 import { getCategories, getSubcategory } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductUpdateForm from "../../../components/forms/ProductUpdateForm";
 
 const initialState = {
@@ -27,13 +27,16 @@ const initialState = {
 
 const ProductUpdate =()=> {
     // state
-    const[values, setValues] = useState(initialState);
-    const[subcategoryOption, setsubcategoryOption] = useState([])
-    const[categories, setCategories] = useState([]);
-    const[selectedCategory, setSelectedCategory] = useState("")
+    const [values, setValues] = useState(initialState);
+    const [subcategoryOption, setsubcategoryOption] = useState([])
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("")
+    const [loading, setLoading] = useState("")
+    const [arrayOfSubs, setArrayOfSubs] = useState([]);
     // const[arrayOfSubCategoryIds, setArryOfSubCategoryIds]= useState([]);
 
     let {slug} = useParams()
+    let navigate = useNavigate();
 
     // redux
     const {user} =  useSelector((state)=>({...state}));
@@ -44,30 +47,55 @@ const ProductUpdate =()=> {
     }, []);
 
     const loadProduct=()=>{
-        getProduct(slug)
-        .then(p=> {
-            // load a single product
-            setValues({...values, ...p.data})
-            // console.log(p)
-            getSubcategory(p.data.category._id).then((res)=> {
-                setsubcategoryOption(res.data);
+        // getProduct(slug)
+        // .then(p=> {
+        //     // load a single product
+        //     setValues({...values, ...p.data})
+        //     // console.log(p)
+        //     getSubcategory(p.data.category._id).then((res)=> {
+        //         setsubcategoryOption(res.data);
+        //     });
+        // });
+        getProduct(slug).then((p) => {
+            // console.log("single product", p);
+            // 1 load single proudct
+            setValues({ ...values, ...p.data });
+            // 2 load single product category subs
+            getSubcategory(p.data.category._id).then((res) => {
+              setsubcategoryOption(res.data); // on first load, show default subs
             });
-            // prepare array of subcategories ids
-            // let arr = [];
-            
-            // p.data.subcategories.map((s)=> 
-            // {
-            //     arr.push(s.id)
-            // });
-            // console.log("arr", arr)
-            // setArryOfSubCategoryIds((prev)=> arr);
-        });
+            // 3 prepare array of sub ids to show as default sub values in antd Select
+            let arr = [];
+            p.data.subcategory.map((s) => {
+              arr.push(s._id);
+            });
+            console.log("ARR", arr);
+            setArrayOfSubs((prev) => arr); // required for ant design select to work
+          });
     }
     const handleChange =(e)=>{
         setValues({...values, [e.target.name]: e.target.value})
     }
     const handleSubmit=(e)=> {
         e.preventDefault();
+        setLoading(true);
+
+       
+    values.subs = arrayOfSubs;
+    values.category = selectedCategory ? selectedCategory : values.category;
+        
+
+        updateProduct(slug, values, user.token)
+        .then((res) => {
+        setLoading(false);
+        toast.success(`"${res.data.title}" is updated`);
+        navigate("/admin/products");
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        toast.error(err.response.data.err);
+      });
     }
     const loadCategories =()=>
     getCategories().then((c)=>{
@@ -77,7 +105,7 @@ const ProductUpdate =()=> {
 
     const handleCategoryChange =(e)=> {
         e.preventDefault();
-        console.log(`Clicked Category `, e.target.value)
+        // console.log(`Clicked Category `, e.target.value)
         setValues({...values, subcategory: []})
 
         setSelectedCategory(e.target.value);
@@ -101,6 +129,16 @@ const ProductUpdate =()=> {
                 </div>
                 <div className="col-md-10">
                     <h4>Update Product</h4>
+                    {loading? <LoadingOutlined className="text-warning h1" /> :
+                   
+                   <div className="p-3">
+                       <FileUpload
+                           values={values}
+                           setValues={setValues}
+                           setLoading={setLoading}
+                       />
+                   </div>
+                   }
                     <ProductUpdateForm 
                         handleChange={handleChange}
                         handleSubmit={handleSubmit}
@@ -110,6 +148,8 @@ const ProductUpdate =()=> {
                         subcategoryOption={subcategoryOption}
                         setValues={setValues}
                         selectedCategory={selectedCategory}
+                        arrayOfSubs={arrayOfSubs}
+                        setArrayOfSubs={setArrayOfSubs}
                     />
                     <hr/>
                 </div>

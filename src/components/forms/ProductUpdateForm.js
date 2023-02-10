@@ -11,8 +11,8 @@ const ProductUpdateForm =({
                             subcategoryOption,
                             setValues,
                             selectedCategory,
-                            arrayOfSubCategoryIds,
-                            setArryOfSubCategoryIds
+                            arrayOfSubs,
+                            setArrayOfSubs,
                         })=>{
     const { title, 
         description, 
@@ -149,8 +149,10 @@ const ProductUpdateForm =({
                         mode="multiple"
                         style={{width: '100%'}}
                         placeholder="Please select subcategory"
-                        value={subcategory}
-                        onChange={value => setValues({...values, subcategory: value})}
+                        value={arrayOfSubs}
+                        onChange={(value) => setArrayOfSubs(value)}
+                        // value={subcategory}
+                        // onChange={value => setValues({...values, subcategory: value})}
                         allowClear                       
                     >
                             {subcategoryOption.length && 
