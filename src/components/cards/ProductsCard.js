@@ -9,7 +9,7 @@ const {Meta} = Card
 const ProductCard =({product})=> {
     const {title, description, images, slug} = product;
     return(<div>
-                <Card
+            <Card
             // eslint-disable-next-line jsx-a11y/alt-text
             cover={<img src={images && images.length ? images[0].url : laptop}
                 style={{height: '150px', objectFit: "cover"}}
