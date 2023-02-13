@@ -33,7 +33,6 @@ const ProductUpdate =()=> {
     const [selectedCategory, setSelectedCategory] = useState("")
     const [loading, setLoading] = useState("")
     const [arrayOfSubs, setArrayOfSubs] = useState([]);
-    // const[arrayOfSubCategoryIds, setArryOfSubCategoryIds]= useState([]);
 
     let {slug} = useParams()
     let navigate = useNavigate();
@@ -81,7 +80,7 @@ const ProductUpdate =()=> {
         setLoading(true);
 
        
-    values.subs = arrayOfSubs;
+    values.subcategory = arrayOfSubs;
     values.category = selectedCategory ? selectedCategory : values.category;
         
 

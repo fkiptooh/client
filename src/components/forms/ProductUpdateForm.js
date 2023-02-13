@@ -3,16 +3,16 @@ import { Select } from 'antd'
 const Option = Select;
 
 const ProductUpdateForm =({
-                            handleSubmit, 
-                            handleChange, 
-                            values, 
-                            handleCategoryChange,
-                            categories,
-                            subcategoryOption,
-                            setValues,
-                            selectedCategory,
-                            arrayOfSubs,
-                            setArrayOfSubs,
+    handleSubmit,
+    handleChange,
+    setValues,
+    values,
+    handleCategoryChange,
+    categories,
+    subcategoryOption,
+    arrayOfSubs,
+    setArrayOfSubs,
+    selectedCategory,
                         })=>{
     const { title, 
         description, 
@@ -147,23 +147,20 @@ const ProductUpdateForm =({
                     <label>Sub Category</label>
                     <Select
                         mode="multiple"
-                        style={{width: '100%'}}
-                        placeholder="Please select subcategory"
+                        style={{ width: "100%" }}
+                        placeholder="Please select"
                         value={arrayOfSubs}
                         onChange={(value) => setArrayOfSubs(value)}
-                        // value={subcategory}
-                        // onChange={value => setValues({...values, subcategory: value})}
-                        allowClear                       
-                    >
-                            {subcategoryOption.length && 
-                            subcategoryOption.map((s)=>(
-                                <Option key={s._id} value={s._id}>{s.name}</Option>
+                        allowClear
+                        >
+                        {subcategoryOption.length &&
+                            subcategoryOption.map((s) => (
+                            <Option key={s._id} value={s._id}>
+                                {s.name}
+                            </Option>
                             ))}
-                        
                     </Select>
                 </div>
-                {/* { JSON.stringify(values.subcategory)}
-                {subcategoryOption ? subcategoryOption.length : "No sub categories yet" } */}
                 <br/>
                 <button className="btn btn-outline-info">Save</button>
                 </form>
