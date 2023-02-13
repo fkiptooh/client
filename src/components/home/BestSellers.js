@@ -1,19 +1,28 @@
+import { Pagination } from 'antd';
 import React, {useEffect, useState} from 'react';
-import { getProducts } from '../../functions/product';
+import { getProducts, getProductsCount } from '../../functions/product';
 import LoadingCard from '../cards/LoadingCard';
 import ProductCard from '../cards/ProductsCard';
 
 const NewArrivals = () => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [productsCount, setProductsCount] = useState(0);
+    const [page, setPage] = useState(1);
 
     useEffect(()=>{
         loadAllProducts();
-    }, []);
+    }, [page]);
+
+    useEffect(()=> {
+        getProductsCount().then((res)=> setProductsCount(res.data));
+    }, [])
+
+    let sum = parseInt(productsCount/3) * 10; 
 
     const loadAllProducts =()=> {
         setLoading(true)
-        getProducts("sold", "desc", 3)
+        getProducts("sold", "desc", page)
         .then(res=>{
             setProducts(res.data);
             setLoading(false)
@@ -30,6 +39,12 @@ const NewArrivals = () => {
                 ))}
             </div>}
         </div>
+        <Pagination
+        className='text-center'
+            current={page}
+            total={sum}
+            onChange={(value)=> setPage(value)}
+         />
         </>
        
     );
