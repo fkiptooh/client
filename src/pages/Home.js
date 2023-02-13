@@ -1,6 +1,7 @@
 import React from 'react';
 import Jumbotron from '../components/cards/Jumbotron';
 import NewArrivals from '../components/home/NewArrivals';
+import BestSellers from '../components/home/BestSellers'
 
 const Home = () => {
     return(
@@ -10,11 +11,17 @@ const Home = () => {
             {/* {loading ? <h4>Loading</h4> : <h4>All Products</h4>} */}
             {/* {JSON.stringify(products)} */}
         </div>
-        <div className='text-center p-3 mt-5 mb-5 display-4 jumbotron'>
+        <h4 className='text-center p-3 mt-5 mb-5 display-4 jumbotron'>
             <Jumbotron text={['New Arrivals']} />
-        </div>
+        </h4>
         <NewArrivals />
-        
+        {/* <br /> */}
+        <h4 className='text-center p-3 mt-5 mb-5 display-4 jumbotron'>
+            <Jumbotron text={['Best Sellers']} />
+        </h4>
+        <BestSellers />
+        <br />
+
         </>
        
     );
