@@ -27,6 +27,7 @@ import SubCategoryUpdate from './pages/admin/subcategory/SubCategotyUpdate';
 import ProductCreate from './pages/admin/product/ProductCreate';
 import AllProducts from './pages/admin/product/AllProducts';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
+import Product from './pages/Product';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -90,6 +91,7 @@ const App=()=> {
             <Route path='/admin/product/:slug' element={<ProductUpdate/>}/>
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
+          <Route path="/product/:slug" element={<Product/>}/>
         </Routes>
       </>
       </BrowserRouter>
