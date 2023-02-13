@@ -2,7 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ProductListItems =({product})=> {
-    const { price, category, subcategory, shipping, sold, brand, color, quantity } = product;
+    const { price, 
+        category, 
+        subcategory, 
+        shipping, 
+        sold, 
+        brand, 
+        color, 
+        quantity } = product;
     return(
         <ul className="list-group">
             <li className="list-group-item">
