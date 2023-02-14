@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Button } from "antd";
 import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { createOrUpdateUser } from "../../functions/auth";
 
@@ -15,19 +15,30 @@ const Login = () => {
   let dispatch = useDispatch();
   const {user} = useSelector((state)=>({...state}))
   const navigate = useNavigate()
+  
+  // const location = useLocation();
+  const location = useLocation();
+
+//   useEffect(()=>{
+//     if(user && user.token) navigate("/");
+// // eslint-disable-next-line react-hooks/exhaustive-deps
+// },[user, navigate]);
+
+
 
   const roleBasedRedirect = (res) => {
-  if(res.data.role === 'admin'){
-    navigate("/admin/dashboard");
+    // check if intended
+    let intended = location.state.from;
+  if(intended){
+    navigate(intended);
   } else {
-    navigate("/user/history");
+    if(res.data.role === 'admin'){
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/user/history");
+    }
   }
 }
-
-  useEffect(()=>{
-      if(user && user.token) navigate("/");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[user]) 
 
   const handleSubmit = async (e) => {
     e.preventDefault();

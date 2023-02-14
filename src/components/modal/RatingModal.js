@@ -3,21 +3,25 @@ import { Modal, Button } from "antd";
 import { toast } from 'react-toastify';
 import { StarOutlined } from "@ant-design/icons";
 import { useSelector } from 'react-redux';
-import { useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const RatingModal =({children})=> {
     const { user } = useSelector((state)=> ({...state}));
     const [modalVisible, setModalVisible] = useState(false);
 
     const navigate = useNavigate();
+    let {slug} = useParams();
+    // let location = useLocation();
 
 
     const handleModal =()=> {
         if(user && user.token){
             setModalVisible(true)
         } else {
-            navigate(`/login`);
+            navigate(
+                `/login`,{
+                state: { from: `/product/${slug}`}
+            });
         }
     }
 
