@@ -20,7 +20,12 @@ const Login = () => {
   const location = useLocation();
 
   useEffect(()=> {
-    if(user && user.token) navigate("/");
+    let from = location.state?.from;
+    if(from){
+      return
+    }else{
+      if(user && user.token) navigate("/");
+    }
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[user, navigate]);
 
@@ -28,7 +33,7 @@ const Login = () => {
 
   const roleBasedRedirect = (res) => {
     // check if intended
-    let intended = location.state.from;
+    let intended = location.state?.from;
   if(intended){
     navigate(intended);
   } else {
