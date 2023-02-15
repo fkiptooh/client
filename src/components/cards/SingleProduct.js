@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useState } from "react";
+import React from "react";
 import { Card,Tabs } from "antd";
 import { Link } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -10,7 +10,8 @@ import ProductListItems from "./ProductListItems";
 import StarRatings from 'react-star-ratings';
 import RatingModal from "../modal/RatingModal";
 
-const SingleProduct = ({product}) => {
+// child component to Product page
+const SingleProduct = ({product, onStarRating, star}) => {
     const { title, images, description, _id } = product;
 
     // const tabs = new Array(2).fill(null).map((_, i) => {
@@ -78,10 +79,9 @@ const SingleProduct = ({product}) => {
                         <RatingModal>
                             <StarRatings 
                                 name={_id}
-                                rating={2}
+                                rating={star}
                                 numberOfStars={5}
-                                changeRating={(newRating, name)=> 
-                                console.log('newRating', newRating, "name", name)}
+                                changeRating={onStarRating}
                                 isSelectable={true}
                                 starRatedColor="red"
                             />
