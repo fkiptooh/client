@@ -11,17 +11,10 @@ import StarRatings from 'react-star-ratings';
 import RatingModal from "../modal/RatingModal";
 
 // child component to Product page
-const SingleProduct = ({product, onStarRating, star}) => {
+const SingleProduct = ({product, star, onStarRating}) => {
     const { title, images, description, _id } = product;
 
-    // const tabs = new Array(2).fill(null).map((_, i) => {
-    //     const id = String(i + 1).toString();
-    //     return {
-    //         label: i === 0 ? "Description" : "More",
-    //         key: id,
-    //         children: i === 0 ? [description] : "Contact us on XXXX XXXX XXXX for more information on the product"
-    //     };
-    // });
+
 
     const tabs = [
         {
@@ -79,9 +72,9 @@ const SingleProduct = ({product, onStarRating, star}) => {
                         <RatingModal>
                             <StarRatings 
                                 name={_id}
+                                changeRating={onStarRating}
                                 rating={star}
                                 numberOfStars={5}
-                                changeRating={onStarRating}
                                 isSelectable={true}
                                 starRatedColor="red"
                             />
