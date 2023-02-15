@@ -19,10 +19,10 @@ const Login = () => {
   // const location = useLocation();
   const location = useLocation();
 
-//   useEffect(()=>{
-//     if(user && user.token) navigate("/");
-// // eslint-disable-next-line react-hooks/exhaustive-deps
-// },[user, navigate]);
+  useEffect(()=> {
+    if(user && user.token) navigate("/");
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[user, navigate]);
 
 
 

@@ -3,7 +3,7 @@ import { Modal, Button } from "antd";
 import { toast } from 'react-toastify';
 import { StarOutlined } from "@ant-design/icons";
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const RatingModal =({children})=> {
     const { user } = useSelector((state)=> ({...state}));
@@ -11,7 +11,6 @@ const RatingModal =({children})=> {
 
     const navigate = useNavigate();
     let {slug} = useParams();
-    // let location = useLocation();
 
 
     const handleModal =()=> {
@@ -34,7 +33,7 @@ const RatingModal =({children})=> {
             <Modal
                 title="Leave your ratings"
                 centered
-                visible={modalVisible}
+                open={modalVisible}
                 onOk={()=> {
                     setModalVisible(false)
                     toast.success("Thanks for your review, it will appear soon");

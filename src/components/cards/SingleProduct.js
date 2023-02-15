@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
+import React, { useState } from "react";
 import { Card,Tabs } from "antd";
 import { Link } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -10,36 +10,38 @@ import ProductListItems from "./ProductListItems";
 import StarRatings from 'react-star-ratings';
 import RatingModal from "../modal/RatingModal";
 
-const { TabPane } = Tabs;
+// const { TabPane } = Tabs;
 
 
 
-const SingleProduct =({product})=> {
+const SingleProduct = ({product}) => {
+    const { title, images, description, _id } = product;
 
-    const { title, images, description, _id } = product
+    const tabs = new Array(2).fill(null).map((_, i) => {
+        const id = String(i + 1).toString();
+        return {
+            label: i === 0 ? "Description" : "More",
+            key: id,
+            children: i === 0 ? [description] : "Contact us on XXXX XXXX XXXX for more information on the product"
+        };
+    });
+
     return(
         <>
             <div className="col-md-7">
-                {images && images.length ?<Carousel showArrows={true} autoPlay infiniteLoop>
+                {images && images.length ? <Carousel showArrows={true} autoPlay infiniteLoop>
                     {images && images.map((i)=> <img src={i.url} key={i.public_id}/>)}
                 </Carousel> :
                 <Card
-                cover={
-                    <img 
-                        src={laptop}
-                        className="mb-3 card-image"
-                    />
-                }
+                    cover={
+                        <img 
+                            src={laptop}
+                            className="mb-3 card-image"
+                        />
+                    }
                 ></Card>
                 }
-                <Tabs type="card">
-                    <TabPane tab='Description' key="1">
-                        {description && description}
-                    </TabPane>
-                    <TabPane tab="More" key="2">
-                        Contact us on XXXX XXXX XXXX for more information on the product
-                    </TabPane>
-                </Tabs>
+                <Tabs type="card" items={tabs} const="true" />
             </div>
             <div className="col-md-5">
                 <h1 className="bg-info p-3">{title}</h1>
@@ -69,7 +71,6 @@ const SingleProduct =({product})=> {
             </div>
         </>
     )
-
 }
 
 export default SingleProduct;
