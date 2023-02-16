@@ -19,7 +19,7 @@ const Product =()=> {
     useEffect(()=>{
         if(product.ratings && user){
             let existingRatingObject = product.ratings.find(
-                (ele) => ele.postedBy.toString() === user._id.toString()
+                (ele) => ele.postedBy && ele.postedBy.toString() === user._id.toString()
               );
               existingRatingObject && setStar(existingRatingObject.star); // current logged in user star rating info
         }
