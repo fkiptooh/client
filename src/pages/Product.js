@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
-import { getProduct, productStar } from "../functions/product";
+import { getProduct, productStar, getRelated } from "../functions/product";
 import SingleProduct from "../components/cards/SingleProduct";
 import { useSelector } from "react-redux";
+import ProductCard from "../components/cards/ProductsCard";
 
 const Product =()=> {
     const [product, setProduct] = useState({})
+    const [related, setRelated] = useState([]);
     const [star, setStar] = useState(0);
     // redux
     const { user } = useSelector((state)=> ({...state}));
@@ -35,7 +37,13 @@ const Product =()=> {
           });
     }
 
-    const loadProduct=()=>  getProduct(slug).then((res)=> setProduct(res.data))
+    const loadProduct=()=>  {
+        getProduct(slug).then((res)=> {
+            setProduct(res.data);
+            // load related
+            getRelated(res.data._id).then((res)=> setRelated(res.data));
+        })
+    }
 
     return <div className="container-fluid">
         <div className="row pt-4">
@@ -46,7 +54,12 @@ const Product =()=> {
                 <hr/>
                 Related products
                 <hr />
+                {/* {JSON.stringify(related)} */}
             </div>
+        </div>
+        <div className="row pb-5">
+            {related.length ? related.map((r)=>
+            <div className="col-md-4" key={r._id}><ProductCard product={r}/></div> ) : <div className="text-center">No products yet</div>}
         </div>
     </div>
 
