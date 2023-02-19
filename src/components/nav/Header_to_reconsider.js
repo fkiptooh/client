@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-operators */
-import { AppstoreOutlined, SettingOutlined, UserAddOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons';
+import { AppstoreOutlined, SettingOutlined, UserAddOutlined, LogoutOutlined, UserOutlined, ShoppingOutlined} from '@ant-design/icons';
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
@@ -28,6 +28,9 @@ const Header_to_reconsider = () => {
         }
         if(e.key ==='login'){
           navigate("/login")
+        }
+        if(e.key === 'shop'){
+          navigate("/shop")
         }      
          else if(e.key==='home'){
           navigate(`/${e.key}`);
@@ -63,6 +66,11 @@ const Header_to_reconsider = () => {
             icon: <AppstoreOutlined />,
           },
           {
+            label: <span>Shop</span>,
+            key: "shop",
+            icon: <ShoppingOutlined />,
+          },
+          {
             label: <span className='float-right p-1'><Search /></span>
           },
           {
@@ -92,6 +100,11 @@ const Header_to_reconsider = () => {
           onClick={onClick}
           style={{ display: "flex", flex: 1, justifyContent: "flex-end" }}
           items={[
+            {
+              label: <span>Shop</span>,
+              key: "shop",
+              icon: <ShoppingOutlined />,
+            },
             {
               label: <span style={{ textAlign: "right" }}>Register</span>,
               key: "register",
