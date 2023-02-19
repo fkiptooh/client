@@ -3,6 +3,7 @@ import Jumbotron from '../components/cards/Jumbotron';
 import NewArrivals from '../components/home/NewArrivals';
 import BestSellers from '../components/home/BestSellers'
 import CategoryList from '../components/category/CategoryList';
+import SubCategoryList from '../components/subcategory/SubCategoryList';
 
 const Home = () => {
     return(
@@ -27,6 +28,12 @@ const Home = () => {
             Categories
         </h4>
         <CategoryList />
+        <br />
+        <h4 className='text-center p-3 mt-5 mb-5 display-4 jumbotron'>
+            {/* <Jumbotron text={['Categories']} /> */}
+            Sub Categories
+        </h4>
+        <SubCategoryList />
         <br />
 
         </>
