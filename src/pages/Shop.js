@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import ProductCard from '../components/cards/ProductsCard';
 import {getCategories} from '../functions/category'
 import {getProductsByCount,fetchProductsByFilter} from '../functions/product';
+import { getSubcategories } from "../functions/subcategory";
 import { useDispatch, useSelector } from "react-redux";
 import { Menu, Slider, Checkbox } from "antd";
 import { DollarOutlined, DownSquareOutlined, StarOutlined } from "@ant-design/icons";
@@ -17,6 +18,8 @@ const Shop = () => {
     const [categories, setCategories] = useState([]);
     const [categoryIds, setCategoryIds] = useState([]);
     const [stars, setStars] = useState('');
+    const [subcategories, setSubcategories] = useState([]);
+    const [subcategory, setSubcategory] = useState("");
 
     let dispatch = useDispatch();
     
@@ -26,6 +29,8 @@ const Shop = () => {
     useEffect(()=> {
         loadAllProducts();
         getCategories().then(res => setCategories(res.data));
+        // load subcategorie
+        getSubcategories().then(res=> setSubcategories(res.data));
     },[]);
 
     const filterProducts =(arg)=>{
@@ -62,6 +67,7 @@ const Shop = () => {
         });
         setCategoryIds([])
         setStars("")
+        setSubcategory("");
         setPrice(value);
         setTimeout(()=> {
                 setOk(!ok)
@@ -100,6 +106,7 @@ const Shop = () => {
             })
             setPrice([0, 0]);
             setStars("");
+            setSubcategory("")
             let inTheState =[...categoryIds];
             let justChecked = e.target.value;
             let foundInTheState = inTheState.indexOf(justChecked); //index or -1
@@ -125,6 +132,7 @@ const Shop = () => {
             })
             setPrice([0, 0]);
             setCategoryIds([]);
+            setSubcategory("");
             setStars(num)
             filterProducts({stars: num})
         }
@@ -138,6 +146,30 @@ const Shop = () => {
                 <Star starClicks={handleStarClicks} numberOfStars={1}/>
             </div>
         )
+
+        // 6. Filter products based on subcategories
+        const showSubcategories=()=> subcategories.map((s)=>
+        <div 
+            onClick={()=> handleSubmit(s)}
+            className="p-1 m-1 badge badge-primary"
+            style={{cursor: 'pointer'}}
+            >
+            {s.name}
+        </div>)
+
+        const handleSubmit =subcategory=> {
+            // console.log("Sub category -->", s);
+            setSubcategory(subcategory);
+            dispatch({
+                type: "SEARCH_QUERY",
+                payload: { text: ''}
+            })
+            setPrice([0, 0]);
+            setCategoryIds([]);
+            setStars("")
+            filterProducts({subcategory})
+
+        }
           
     
     return(
@@ -146,7 +178,7 @@ const Shop = () => {
                 <div className="col-md-3 pt-2">
                    <h4>Search/Filter</h4>
                    <hr />
-                   <Menu mode="inline" defaultOpenKeys={["1", "2", "3"]}>
+                   <Menu mode="inline" defaultOpenKeys={["1", "2", "3", "4"]}>
                     {/* Price */}
                         <SubMenu key="1" 
                                  title={<span className="h6">
@@ -171,7 +203,7 @@ const Shop = () => {
                                                     <DownSquareOutlined /> 
                                                     &nbsp;Categories
                                                 </span>}>
-                            <div style={{marginTop: '-10px'}}>
+                            <div style={{marginTop: '10px'}}>
                                 {/* {JSON.stringify(categories)} */}
                                 {showCategories()}
                             </div>
@@ -183,8 +215,19 @@ const Shop = () => {
                                                     <StarOutlined /> 
                                                     &nbsp;Ratings
                                                 </span>}>
-                            <div style={{marginTop: '-10px'}} className="pb-2">
+                            <div style={{marginTop: '10px'}} className="pb-2">
                                 {showStars()}
+                            </div>
+                        </SubMenu>
+                        <SubMenu 
+                            key="4"
+                            title={<span className="h6">
+                                                    <DownSquareOutlined /> 
+                                                    &nbsp;Sub Categories
+                                                </span>}>
+                            <div style={{marginTop: '10px'}} className="pl-4 pr-4">
+                                {/* {JSON.stringify(categories)} */}
+                                {showSubcategories()}
                             </div>
                         </SubMenu>
                    </Menu>
