@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
 import ProductCard from '../components/cards/ProductsCard';
+import {getCategories} from '../functions/category'
 import {getProductsByCount,fetchProductsByFilter} from '../functions/product';
 import { useDispatch, useSelector } from "react-redux";
-import { Menu, Slider } from "antd";
-import { DollarOutlined } from "@ant-design/icons";
+import { Menu, Slider, Checkbox } from "antd";
+import { DollarOutlined, DownSquareOutlined } from "@ant-design/icons";
 
 const {SubMenu, ItemGroup} = Menu;
 
@@ -12,6 +13,8 @@ const Shop = () => {
     const [loading, setLoading] = useState(false);
     const [price, setPrice] = useState([0, 0]);
     const [ok, setOk] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [categoryIds, setCategoryIds] = useState([]);
 
     let dispatch = useDispatch();
     
@@ -20,6 +23,7 @@ const Shop = () => {
 
     useEffect(()=> {
         loadAllProducts();
+        getCategories().then(res => setCategories(res.data));
     },[]);
 
     const filterProducts =(arg)=>{
@@ -53,6 +57,7 @@ const Shop = () => {
             type: "SEARCH_QUERY",
             payload: { text : ""}
         });
+        setCategoryIds([])
         setPrice(value);
         setTimeout(()=> {
                 setOk(!ok)
@@ -63,8 +68,50 @@ const Shop = () => {
     useEffect(()=> {
         console.log("ok to request");
         filterProducts({price});
+    },[ok]);
+    // 4. Load products based on categories
+    // Show categories in a list of checkbox
+    const showCategories =()=>
+        categories.map((c)=> (
+            <div key={c._id}>
+                <Checkbox
+                    className="pb-2 pr-4 pl-4"
+                    value={c._id}
+                    name="category"
+                    onChange={handleCheck}
+                    checked={categoryIds.includes(c._id)}
+                >
+                    {c.name}
+                </Checkbox>
+                <br />
+            </div>
+        ));
 
-    },[ok])
+        const handleCheck =(e) => {
+            // console.log(e.target.value)
+            dispatch({
+                type: "SEARCH_QUERY",
+                payload: { text: ''}
+            })
+            setPrice([0, 0]);
+            let inTheState =[...categoryIds];
+            let justChecked = e.target.value;
+            let foundInTheState = inTheState.indexOf(justChecked); //index or -1
+            // indexOf() returns -1 else index of an item in the array
+
+            if(foundInTheState === -1) {
+                inTheState.push(justChecked)
+            } else {
+                // if found, pull out one index from the arry
+                inTheState.splice(foundInTheState, 1);
+            }
+
+            setCategoryIds(inTheState);
+            // console.log(inTheState);
+
+            filterProducts({category: inTheState});
+        }
+    
     return(
         <div className="container fluid">
             <div className="row">
@@ -72,7 +119,12 @@ const Shop = () => {
                    <h4>Search/Filter</h4>
                    <hr />
                    <Menu mode="inline" defaultOpenKeys={["1", "2"]}>
-                        <SubMenu key="1" title={<span className="h6"><DollarOutlined /> Price</span>}>
+                    {/* Price */}
+                        <SubMenu key="1" 
+                                 title={<span className="h6">
+                                                <DollarOutlined /> 
+                                                &nbsp;Price
+                                        </span>}>
                             <div>
                                 <Slider
                                     className="ml-4 mr-4"
@@ -82,6 +134,16 @@ const Shop = () => {
                                     onChange={handleSlider}
                                     max={130000}
                                     />
+                            </div>
+                        </SubMenu>
+                        {/* Categories */}
+                        <SubMenu key="2" title={<span className="h6">
+                                                    <DownSquareOutlined /> 
+                                                    &nbsp;Categories
+                                                </span>}>
+                            <div style={{marginTop: '-10px'}}>
+                                {/* {JSON.stringify(categories)} */}
+                                {showCategories()}
                             </div>
                         </SubMenu>
                    </Menu>
