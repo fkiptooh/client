@@ -4,7 +4,7 @@ import {getCategories} from '../functions/category'
 import {getProductsByCount,fetchProductsByFilter} from '../functions/product';
 import { getSubcategories } from "../functions/subcategory";
 import { useDispatch, useSelector } from "react-redux";
-import { Menu, Slider, Checkbox } from "antd";
+import { Menu, Slider, Checkbox, Radio } from "antd";
 import { DollarOutlined, DownSquareOutlined, StarOutlined } from "@ant-design/icons";
 import Star from "../components/forms/Star";
 
@@ -20,6 +20,8 @@ const Shop = () => {
     const [stars, setStars] = useState('');
     const [subcategories, setSubcategories] = useState([]);
     const [subcategory, setSubcategory] = useState("");
+    const [brands, setBrands] = useState(["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS", "HP", "DELL"]);
+    const [brand, setBrand] = useState("");
 
     let dispatch = useDispatch();
     
@@ -68,6 +70,7 @@ const Shop = () => {
         setCategoryIds([])
         setStars("")
         setSubcategory("");
+        setBrand("");
         setPrice(value);
         setTimeout(()=> {
                 setOk(!ok)
@@ -107,6 +110,7 @@ const Shop = () => {
             setPrice([0, 0]);
             setStars("");
             setSubcategory("")
+            setBrand("");
             let inTheState =[...categoryIds];
             let justChecked = e.target.value;
             let foundInTheState = inTheState.indexOf(justChecked); //index or -1
@@ -134,6 +138,7 @@ const Shop = () => {
             setCategoryIds([]);
             setSubcategory("");
             setStars(num)
+            setBrand("")
             filterProducts({stars: num})
         }
         // 5. Show products by stars
@@ -167,7 +172,33 @@ const Shop = () => {
             setPrice([0, 0]);
             setCategoryIds([]);
             setStars("")
+            setBrand("")
             filterProducts({subcategory})
+
+        }
+        // 7. Filter based on brands
+        const showBrands=()=>
+            brands.map((b)=>(<Radio 
+                                name={b}
+                                value={b}
+                                className="pb-1 pl-4 pr-4"
+                                checked={b === brand}
+                                onChange={handleBrand}
+                                >
+                                {b}
+                            </Radio>))
+
+        const handleBrand = (e) => {
+            setSubcategory("");
+            dispatch({
+                type: "SEARCH_QUERY",
+                payload: { text: ''}
+            })
+            setPrice([0, 0]);
+            setCategoryIds([]);
+            setStars("")
+            setBrand(e.target.value);
+            filterProducts({brand: e.target.value})
 
         }
           
@@ -178,7 +209,7 @@ const Shop = () => {
                 <div className="col-md-3 pt-2">
                    <h4>Search/Filter</h4>
                    <hr />
-                   <Menu mode="inline" defaultOpenKeys={["1", "2", "3", "4"]}>
+                   <Menu mode="inline" defaultOpenKeys={["1", "2", "3", "4","5","6","7"]}>
                     {/* Price */}
                         <SubMenu key="1" 
                                  title={<span className="h6">
@@ -219,6 +250,7 @@ const Shop = () => {
                                 {showStars()}
                             </div>
                         </SubMenu>
+                        {/* Sub category */}
                         <SubMenu 
                             key="4"
                             title={<span className="h6">
@@ -228,6 +260,18 @@ const Shop = () => {
                             <div style={{marginTop: '10px'}} className="pl-4 pr-4">
                                 {/* {JSON.stringify(categories)} */}
                                 {showSubcategories()}
+                            </div>
+                        </SubMenu>
+                        {/* Brands */}
+                        <SubMenu 
+                            key="5"
+                            title={<span className="h6">
+                                                    <DownSquareOutlined /> 
+                                                    &nbsp;Brands
+                                                </span>}>
+                            <div style={{marginTop: '10px'}} className="pl-4 pr-4">
+                                {/* {JSON.stringify(categories)} */}
+                                {showBrands()}
                             </div>
                         </SubMenu>
                    </Menu>
