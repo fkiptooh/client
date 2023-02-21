@@ -22,6 +22,8 @@ const Shop = () => {
     const [subcategory, setSubcategory] = useState("");
     const [brands, setBrands] = useState(["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS", "HP", "DELL"]);
     const [brand, setBrand] = useState("");
+    const [colors, setColors] = useState(["Black", "Brown", "Silver", "White", "Blue"]);
+    const [color, setColor] = useState("");
 
     let dispatch = useDispatch();
     
@@ -71,6 +73,7 @@ const Shop = () => {
         setStars("")
         setSubcategory("");
         setBrand("");
+        setColor("")
         setPrice(value);
         setTimeout(()=> {
                 setOk(!ok)
@@ -111,6 +114,7 @@ const Shop = () => {
             setStars("");
             setSubcategory("")
             setBrand("");
+            setColor("")
             let inTheState =[...categoryIds];
             let justChecked = e.target.value;
             let foundInTheState = inTheState.indexOf(justChecked); //index or -1
@@ -139,6 +143,7 @@ const Shop = () => {
             setSubcategory("");
             setStars(num)
             setBrand("")
+            setColor("")
             filterProducts({stars: num})
         }
         // 5. Show products by stars
@@ -173,6 +178,7 @@ const Shop = () => {
             setCategoryIds([]);
             setStars("")
             setBrand("")
+            setColor("")
             filterProducts({subcategory})
 
         }
@@ -197,10 +203,38 @@ const Shop = () => {
             setPrice([0, 0]);
             setCategoryIds([]);
             setStars("")
+            setColor("")
             setBrand(e.target.value);
             filterProducts({brand: e.target.value})
 
         }
+        // 8. Filter based on color
+        const handleColor =(e)=> {
+            setSubcategory("");
+            dispatch({
+                type: "SEARCH_QUERY",
+                payload: { text: ''}
+            })
+            setPrice([0, 0]);
+            setCategoryIds([]);
+            setStars("")
+            setBrand("");
+            setColor(e.target.value)
+            filterProducts({color: e.target.value})
+        }
+        const showColors=()=> 
+            colors.map((c)=>(
+                <Radio
+                    className="pb-1 pl-4 pr-4"
+                    name={c}
+                    value={c}
+                    checked={c===color}
+                    onChange={handleColor}
+                >
+                    {c}
+                </Radio>
+            ));
+        
           
     
     return(
@@ -272,6 +306,18 @@ const Shop = () => {
                             <div style={{marginTop: '10px'}} className="pl-4 pr-4">
                                 {/* {JSON.stringify(categories)} */}
                                 {showBrands()}
+                            </div>
+                        </SubMenu>
+                        {/* Color */}
+                        <SubMenu 
+                            key="6"
+                            title={<span className="h6">
+                                                    <DownSquareOutlined /> 
+                                                    &nbsp;Color
+                                                </span>}>
+                            <div style={{marginTop: '10px'}} className="pl-4 pr-4">
+                                {/* {JSON.stringify(categories)} */}
+                                {showColors()}
                             </div>
                         </SubMenu>
                    </Menu>
