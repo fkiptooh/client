@@ -24,6 +24,7 @@ const Shop = () => {
     const [brand, setBrand] = useState("");
     const [colors, setColors] = useState(["Black", "Brown", "Silver", "White", "Blue"]);
     const [color, setColor] = useState("");
+    const [shipping, setShipping] = useState("");
 
     let dispatch = useDispatch();
     
@@ -74,6 +75,7 @@ const Shop = () => {
         setSubcategory("");
         setBrand("");
         setColor("")
+        setShipping("")
         setPrice(value);
         setTimeout(()=> {
                 setOk(!ok)
@@ -115,6 +117,7 @@ const Shop = () => {
             setSubcategory("")
             setBrand("");
             setColor("")
+            setShipping("")
             let inTheState =[...categoryIds];
             let justChecked = e.target.value;
             let foundInTheState = inTheState.indexOf(justChecked); //index or -1
@@ -144,6 +147,7 @@ const Shop = () => {
             setStars(num)
             setBrand("")
             setColor("")
+            setShipping("")
             filterProducts({stars: num})
         }
         // 5. Show products by stars
@@ -179,6 +183,7 @@ const Shop = () => {
             setStars("")
             setBrand("")
             setColor("")
+            setShipping("")
             filterProducts({subcategory})
 
         }
@@ -204,6 +209,7 @@ const Shop = () => {
             setCategoryIds([]);
             setStars("")
             setColor("")
+            setShipping("")
             setBrand(e.target.value);
             filterProducts({brand: e.target.value})
 
@@ -219,6 +225,7 @@ const Shop = () => {
             setCategoryIds([]);
             setStars("")
             setBrand("");
+            setShipping("")
             setColor(e.target.value)
             filterProducts({color: e.target.value})
         }
@@ -234,8 +241,42 @@ const Shop = () => {
                     {c}
                 </Radio>
             ));
-        
-          
+        // 8. Filter based on shipping
+          const showShipping=()=> (
+            <>
+                <Checkbox
+                    className="pb-2 pr-4 pl-4"
+                    onChange={handleShipping}
+                    value="Yes"
+                    checked={shipping==='Yes'}
+                >
+                    Yes
+                </Checkbox>
+                <Checkbox
+                    className="pb-2 pr-4 pl-4"
+                    onChange={handleShipping}
+                    value="No"
+                    checked={shipping==='No'}
+                >
+                    No
+                </Checkbox>
+            </>
+          )
+
+          const handleShipping=(e)=> {
+            setSubcategory("");
+            dispatch({
+                type: "SEARCH_QUERY",
+                payload: { text: ''}
+            })
+            setPrice([0, 0]);
+            setCategoryIds([]);
+            setStars("")
+            setBrand("");
+            setColor("")
+            setShipping(e.target.value)
+            filterProducts({shipping: e.target.value})
+          }
     
     return(
         <div className="container fluid">
@@ -318,6 +359,18 @@ const Shop = () => {
                             <div style={{marginTop: '10px'}} className="pl-4 pr-4">
                                 {/* {JSON.stringify(categories)} */}
                                 {showColors()}
+                            </div>
+                        </SubMenu>
+                        {/* Shipping */}
+                        <SubMenu 
+                            key="7"
+                            title={<span className="h6">
+                                                    <DownSquareOutlined /> 
+                                                    &nbsp;Shipping
+                                                </span>}>
+                            <div style={{marginTop: '10px'}} className="pr-4">
+                                {/* {JSON.stringify(categories)} */}
+                                {showShipping()}
                             </div>
                         </SubMenu>
                    </Menu>
