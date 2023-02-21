@@ -41,3 +41,84 @@
 
 
     //return <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} theme="light"/>
+
+
+extarct
+//   return (
+//     <div
+//       style={{
+//         display: "flex",
+//         flexDirection: "row",
+//         justifyContent: "space-between",
+//       }}
+//     >
+//       { user.user && (<Menu
+//         mode="horizontal"
+//         style={{ display: "flex", flex: 1 }}
+//         onClick={onClick}
+//         items={[
+//           {
+//             label: <span>Home</span>,
+//             key: "home",
+//             icon: <AppstoreOutlined />,
+//           },
+//           {
+//             label: <span>Shop</span>,
+//             key: "shop",
+//             icon: <ShoppingOutlined />,
+//           },
+//           {
+//             label: <span className='float-right p-1'><Search /></span>
+//           },
+//           {
+//             key: "SubMenu",
+//             label: <span>{user.user.email && user.user.email.split('@')[0]}</span>,
+//             icon: <SettingOutlined />,
+//             children: [
+//               { 
+//                 label: <span onClick={onDashClick}>Dashboard</span>,
+//               },
+//               // {
+//               //   label: "Option 2",
+//               //   key: "setting:2",
+//               // },
+//               {
+//                 label: "Logout",
+//                 key: "logout",
+//                 icon: <LogoutOutlined />,
+//               }
+//             ],
+//           }
+//         ]}
+//       ></Menu>)}
+//       {shouldShowLoginAndRegister && !user.user && (
+//         <Menu
+//           mode="horizontal"
+//           onClick={onClick}
+//           style={{ display: "flex", flex: 1, justifyContent: "flex-end" }}
+//           items={[
+//             {
+//               label: <span>Shop</span>,
+//               key: "shop",
+//               icon: <ShoppingOutlined />,
+//             },
+//             {
+//               label: <span style={{ textAlign: "right" }}>Register</span>,
+//               key: "register",
+//               icon: <UserAddOutlined />,
+//               type: "float-right primary",
+//             },
+//             {
+//               label: <span className='float-right p-1'><Search /></span>
+//             },
+//             {
+//               label: <span>Login</span>,
+//               key: "login",
+//               icon: <UserOutlined />,
+//             },
+//           ]}
+//         ></Menu>
+//       )}
+//     </div>
+//   );
+// }
