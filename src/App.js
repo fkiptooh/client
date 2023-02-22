@@ -31,6 +31,7 @@ import Product from './pages/Product';
 import CategoryHome from './pages/category/CategoryHome';
 import SubCategoryHome from './pages/subcategory/SubCategoryHome';
 import Shop from './pages/Shop';
+import Cart from './pages/Cart';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -98,6 +99,7 @@ const App=()=> {
           <Route path="/category/:slug" element={<CategoryHome/>}/>
           <Route path="/subcategory/:slug" element={<SubCategoryHome/>}/>
           <Route path='/shop' element={<Shop/>} />
+          <Route path='/cart' element={<Cart/>} />
         </Routes>
       </>
       </BrowserRouter>
