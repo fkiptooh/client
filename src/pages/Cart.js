@@ -1,6 +1,7 @@
 import React from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { Link, useNavigate } from "react-router-dom";
+import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
 
 const Cart =()=>{
     const user = useSelector((state)=> ({...state}));
@@ -8,6 +9,24 @@ const Cart =()=>{
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const showCartItems=()=> {
+  return (      <table className="table table-borded">
+            <thead className="thead-light">
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Count</th>
+                    <th scope="col">Shipping</th>
+                    <th scope="col">Remove</th>
+                </tr>  
+            </thead>
+            {cart.map((p)=>(<ProductCardInCheckout key={p._id} p={p}/>))}
+        </table>);
+    }
 
     const getTotal=()=> {
         return cart.reduce((currentValue, nextValue)=>{
@@ -38,7 +57,7 @@ const Cart =()=>{
                     &nbsp;<Link to="/shop">Continue Shopping</Link>
                 </p>
             ):(
-                "Show products"
+                showCartItems()
             )}
         </div>
         <div className="col-md-4">
