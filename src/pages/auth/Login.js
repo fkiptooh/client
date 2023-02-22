@@ -33,7 +33,7 @@ const Login = () => {
 
   const roleBasedRedirect = (res) => {
     // check if intended
-    let intended = location.state?.from;
+  let intended = location.state?.from;
   if(intended){
     navigate(intended);
   } else {
