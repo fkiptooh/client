@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
-import { Card,Tabs } from "antd";
+import React,{useState} from "react";
+import { Card,Tabs, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -9,11 +9,47 @@ import laptop from '../../images/laptop.png'
 import ProductListItems from "./ProductListItems";
 import StarRatings from 'react-star-ratings';
 import RatingModal from "../modal/RatingModal";
+import { useSelector, useDispatch } from "react-redux";
 import { showAverage } from "../../functions/ratings";
+import _ from 'lodash';
 
 // child component to Product page
 const SingleProduct = ({product, star, onStarRating}) => {
     const { title, images, description, _id } = product;
+    const [tooltip, setTooltip] = useState("Add to cart");
+
+    // redux
+    const {user, cart} = useSelector((state)=> ({...state}));
+
+    const dispatch = useDispatch();
+
+    const handleAddToCart =()=> {
+        // create an array
+        let cart = [];
+        if(typeof window !== 'undefined'){
+            // if the item is in the local storage then lets get it
+            if(localStorage.getItem('cart')){
+                cart = JSON.parse(localStorage.getItem('cart'));
+            }
+            // push new product to cart
+            cart.push({
+                ...product,
+                count: 1,
+            });
+            // remove duplicates.
+            let unique = _.uniqWith(cart, _.isEqual);
+            // save it to the local storage 
+            // console.log(`unique`, unique)
+            localStorage.setItem('cart', JSON.stringify(unique));
+            // tooltip
+            setTooltip("Added");
+
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: unique,
+            });
+        }
+    }
     
     // const tabs = new Array(2).fill(null).map((_, i) => {
     //     const id = String(i + 1).toString();
@@ -75,9 +111,12 @@ const SingleProduct = ({product, star, onStarRating}) => {
                 }
                 <Card
                     actions={[
-                        <>
-                            <ShoppingCartOutlined className="text-success"/> <br /> Add to Cart
-                        </>,
+                        <Tooltip title={tooltip}>
+                            <a onClick={handleAddToCart}>
+                            <ShoppingCartOutlined className="text-danger"/> 
+                            <br/> Add to Cart
+                            </a>
+                        </Tooltip>,
                         <Link to={`/`}><HeartOutlined className="text-warning"/> <br/>
                             Add to WhishList
                         </Link>,

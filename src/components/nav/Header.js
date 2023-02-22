@@ -1,6 +1,13 @@
 /* eslint-disable no-mixed-operators */
-import { AppstoreOutlined, SettingOutlined, UserAddOutlined, LogoutOutlined, UserOutlined, ShoppingOutlined} from '@ant-design/icons';
-import { Menu } from 'antd';
+import { AppstoreOutlined, 
+         SettingOutlined, 
+         UserAddOutlined, 
+         LogoutOutlined, 
+         UserOutlined, 
+         ShoppingOutlined,
+         ShoppingCartOutlined,
+        } from '@ant-design/icons';
+import { Badge, Menu , Avatar} from 'antd';
 import { useNavigate } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +19,14 @@ const Header = () => {
 
     const navigate =  useNavigate();
     let dispatch = useDispatch();
-    let user = useSelector((state)=>({...state}))
+    // const { user, cart } = useSelector((state) => ({
+    //   user: {...state.user},
+    //   cart: {...state.cart},
+    // }));
+    const user = useSelector((state)=>({...state}))
+    const cart = useSelector((state)=>(state.cart));
+    // console.log(`length`, cart.length)
+    
 
     const onClick = (e) => {
         if(e.key === 'logout'){
@@ -31,6 +45,9 @@ const Header = () => {
         }
         if(e.key === 'shop'){
           navigate("/shop")
+        } 
+        if(e.key === 'cart'){
+          navigate("/cart")
         }      
          else if(e.key==='home'){
           navigate(`/${e.key}`);
@@ -72,6 +89,12 @@ return (
           key: "shop",
           icon: <ShoppingOutlined />,
         },
+        {
+          // label: <span>Cart <Badge count={cart.length} offset={[9,0]}/></span>,
+          label: <Badge count={cart.length} offset={[9, 0]}><span>Cart</span></Badge>,
+          key: "cart",
+          icon: <ShoppingCartOutlined />,
+        },        
       ]}
     ></Menu>
     {shouldShowLoginAndRegister ? (
