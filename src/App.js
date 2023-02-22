@@ -12,7 +12,7 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
 import RegisterComplete from './pages/auth/RegisterComplete';
-import Header_to_reconsider from './components/nav/Header_to_reconsider';
+import Header from './components/nav/Header';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import History from './pages/user/History';
 import UnauthorizedPage from './pages/UnauthorizedPage';
@@ -67,7 +67,7 @@ const App=()=> {
     return(
       <BrowserRouter>
       <>
-      <Header_to_reconsider/>
+      <Header/>
       {/* <Header/> */}
       <ToastContainer />
      

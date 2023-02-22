@@ -1,178 +1,130 @@
-// import React, { useState } from "react";
-// import { Menu } from "antd";
-// import {
-//   AppstoreOutlined,
-//   SettingOutlined,
-//   UserOutlined,
-//   UserAddOutlined,
-//   LogoutOutlined,
-// } from "@ant-design/icons";
-// import { Link } from "react-router-dom";
-// import firebase from "firebase/compat/app";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+/* eslint-disable no-mixed-operators */
+import { AppstoreOutlined, SettingOutlined, UserAddOutlined, LogoutOutlined, UserOutlined, ShoppingOutlined} from '@ant-design/icons';
+import { Menu } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import firebase from 'firebase/compat/app';
+import { useDispatch, useSelector } from 'react-redux';
+import './header.css'
+import 'antd/dist/reset.css';
+import Search from '../forms/Search';
 
-// const { SubMenu, Item } = Menu;
+const Header = () => {
 
-// const Header = () => {
-//   const [current, setCurrent] = useState("home");
+    const navigate =  useNavigate();
+    let dispatch = useDispatch();
+    let user = useSelector((state)=>({...state}))
 
-//   let dispatch = useDispatch();
-//   let navigate = useNavigate();
-//   let user = useSelector((state)=>({...state.userReducer}))
+    const onClick = (e) => {
+        if(e.key === 'logout'){
+                firebase.auth().signOut()
+                dispatch({
+                  type: "LOGOUT",
+                  payload: null
+                });
+                navigate("/login");
+        } 
+        if(e.key==='register'){
+          navigate(`/register`)
+        }
+        if(e.key ==='login'){
+          navigate("/login")
+        }
+        if(e.key === 'shop'){
+          navigate("/shop")
+        }      
+         else if(e.key==='home'){
+          navigate(`/${e.key}`);
+      }
+    };
 
-//   const handleClick = (e) => {
-//     // console.log(e.key);
-//     setCurrent(e.key);
-//   };
+    const onDashClick =()=>{
+      if(user.user.role==='admin'){
+        navigate('/admin/dashboard');
+      }
+      else {
+        navigate('/user/history');
+      }
+    }
 
-//   const logout = () => {
-//     firebase.auth().signOut();
-//     dispatch({
-//       type: "LOGOUT",
-//       payload: null,
-//     });
-//     navigate("/login");
-//   };
+  const shouldShowLoginAndRegister = !user.user;
 
-//   return (
-    
-//     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-//       <Item key="home" icon={<AppstoreOutlined />}>
-//         <Link to="/">Home</Link>
-//         {/* -{JSON.stringify(user)} */}
-//       </Item>
+return (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    }}
+  >
+    <Menu
+      mode="horizontal"
+      style={{ display: "flex", flex: 1 }}
+      // onClick={() => {onClick()}}
+      onClick={onClick}
+      items={[
+        {
+          label: <span>Home</span>,
+          key: "home",
+          icon: <AppstoreOutlined />,
+        },
+        {
+          label: <span>Shop</span>,
+          key: "shop",
+          icon: <ShoppingOutlined />,
+        },
+      ]}
+    ></Menu>
+    {shouldShowLoginAndRegister ? (
+      <Menu
+        mode="horizontal"
+        onClick={onClick}
+        style={{ display: "flex", flex: 1, justifyContent: "flex-end" }}
+        items={[
+            {
+              label: <span className='float-right p-1'><Search /></span>
+            },
+          {
+            label: <span style={{ textAlign: "right" }}>Register</span>,
+            key: "register",
+            icon: <UserAddOutlined />,
+            type: "float-right primary",
+          },
+          {
+            label: <span>Login</span>,
+            key: "login",
+            icon: <UserOutlined />,
+          },
+        ]}
+      ></Menu>
+    ):(
+      <Menu
+      mode="horizontal"
+      onClick={onClick}
+      style={{ display: "flex", flex: 1, justifyContent: "flex-end" }}
+      items={[
+          {
+            label: <span className='float-right p-1'><Search /></span>
+          },
+        {
+          key: "SubMenu",
+          label: <span>{user.user.email && user.user.email.split('@')[0]}</span>,
+          icon: <SettingOutlined />,
+          children: [
+            {
+              label: <span onClick={onDashClick}>Dashboard</span>,
+            },
+            {
+              label: "Logout",
+              key: "logout",
+              icon: <LogoutOutlined />,
+            },
+          ],
+        },
+      ]}
+    ></Menu>
+    )}
+  </div>
+);
+}
 
-//       {!user &&
-//         (<Item key="register" icon={<UserAddOutlined />} className="float-right">
-//             <Link to="/register">Register</Link>
-//         </Item>)
-//       }
-
-//       {!user && 
-//         (<Item key="login" icon={<UserOutlined />} className="floa-right" >
-//             <Link to="/login">Login</Link>
-//         </Item>)
-//       }
-
-//       {user &&
-//         (<SubMenu icon={<SettingOutlined />} title="Username">
-//         <Item key="setting:1">Option 1</Item>
-//         <Item key="setting:2">Option 2</Item>
-//         <Item icon={<LogoutOutlined />} onClick={logout}>
-//             Logout
-//         </Item>
-//         </SubMenu>)
-//       }
-//       </Menu>
-    
-//   );
-// };
-
-// export default Header;
-
-
-// import React, { useState } from "react";
-// import { Menu, Badge } from "antd";
-// import {
-//   AppstoreOutlined,
-//   SettingOutlined,
-//   UserOutlined,
-//   UserAddOutlined,
-//   LogoutOutlined,
-//   ShoppingOutlined,
-//   ShoppingCartOutlined,
-// } from "@ant-design/icons";
-// import { Link } from "react-router-dom";
-// // import firebase from "firebase";
-// import firebase from "firebase/compat/app";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-// // import Search from "../forms/Search";
-
-// const { SubMenu, Item } = Menu;
-
-// const Header = () => {
-//   const [current, setCurrent] = useState("home");
-
-//   let dispatch = useDispatch();
-//   let { user, cart } = useSelector((state) => ({ ...state }));
-
-//   let navigate = useNavigate();
-
-//   const handleClick = (e) => {
-//     // console.log(e.key);
-//     setCurrent(e.key);
-//   };
-
-//   const logout = () => {
-//     firebase.auth().signOut();
-//     dispatch({
-//       type: "LOGOUT",
-//       payload: null,
-//     });
-//     navigate("/login");
-//   };
-
-//   return (
-//     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-//       <Item key="home" icon={<AppstoreOutlined />}>
-//         <Link to="/">Home</Link>
-//       </Item>
-
-//       <Item key="shop" icon={<ShoppingOutlined />}>
-//         <Link to="/shop">Shop</Link>
-//       </Item>
-
-//       <Item key="cart" icon={<ShoppingCartOutlined />}>
-//         <Link to="/cart">
-//           {/* <Badge count={cart.length} offset={[9, 0]}>
-//             Cart
-//           </Badge> */}
-//         </Link>
-//       </Item>
-
-//       {!user && (
-//         <Item key="register" icon={<UserAddOutlined />} className="float-right">
-//           <Link to="/register">Register</Link>
-//         </Item>
-//       )}
-
-//       {!user && (
-//         <Item key="login" icon={<UserOutlined />} className="float-right">
-//           <Link to="/login">Login</Link>
-//         </Item>
-//       )}
-
-//       {user && (
-//         <SubMenu
-//           icon={<SettingOutlined />}
-//           title={user.email && user.email.split("@")[0]}
-//           className="float-right"
-//         >
-//           {user && user.role === "subscriber" && (
-//             <Item>
-//               <Link to="/user/history">Dashboard</Link>
-//             </Item>
-//           )}
-
-//           {user && user.role === "admin" && (
-//             <Item>
-//               <Link to="/admin/dashboard">Dashboard</Link>
-//             </Item>
-//           )}
-
-//           <Item icon={<LogoutOutlined />} onClick={logout}>
-//             Logout
-//           </Item>
-//         </SubMenu>
-//       )}
-
-//       <span className="float-right p-1">
-//         {/* <Search /> */}
-//       </span>
-//     </Menu>
-//   );
-// };
-
-// export default Header;
+export default Header;

@@ -8,7 +8,7 @@ import { Menu, Slider, Checkbox, Radio } from "antd";
 import { DollarOutlined, DownSquareOutlined, StarOutlined } from "@ant-design/icons";
 import Star from "../components/forms/Star";
 
-const {SubMenu, ItemGroup} = Menu;
+const {SubMenu} = Menu;
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -34,11 +34,11 @@ const Shop = () => {
     useEffect(()=> {
         loadAllProducts();
         getCategories().then(res => setCategories(res.data));
-        // load subcategorie
+        // load subcategories
         getSubcategories().then(res=> setSubcategories(res.data));
     },[]);
 
-    const filterProducts =(arg)=>{
+    const filterProducts =(arg)=> {
         fetchProductsByFilter(arg)
         .then((res)=> {
             setProducts(res.data);
