@@ -1,6 +1,7 @@
-import React from "react";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useState } from "react";
 import laptop from '../../images/laptop.png'
-import { Card } from 'antd'
+import { Card, Tooltip } from 'antd'
 import { EyeOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { showAverage } from "../../functions/ratings";
@@ -10,6 +11,8 @@ const {Meta} = Card
 
 const ProductCard =({product})=> {
     const {title, description, images, slug, price} = product;
+    const [tooltip, setTooltip] = useState("Add to cart");
+
     const handleAddToCart =()=> {
         // create an array
         let cart = [];
@@ -28,6 +31,8 @@ const ProductCard =({product})=> {
             // save it to the local storage 
             // console.log(`unique`, unique)
             localStorage.setItem('cart', JSON.stringify(unique));
+            // tooltip
+            setTooltip("Added");
         }
     }
     return(<div>
@@ -46,10 +51,12 @@ const ProductCard =({product})=> {
                 <Link to={`/product/${slug}`}>
                     <EyeOutlined className="text-warning"/> <br /> View Product
                 </Link>, 
-                <a onClick={handleAddToCart}>
+                <Tooltip title={tooltip}>
+                    <a onClick={handleAddToCart}>
                     <ShoppingCartOutlined className="text-danger"/> 
                     <br/> Add to Cart
                 </a>
+                </Tooltip>
             ]}
         >
             <Meta title={`${title} - Ksh ${price}`} description={`${description && description.substring(0, 22)}...`}/>
