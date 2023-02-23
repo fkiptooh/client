@@ -7,7 +7,7 @@ This is an ecommerce client side project. This project is build using MEARN stac
 Here are some of the screenshots of the project under development.
 
 ### `Screenshots`
-(https://github.com/fkiptooh/client/blob/master/screenshots/home%20page.png "Home page")
+![Home Page](https://github.com/fkiptooh/client/blob/master/screenshots/home%20page.png "Home page")
 
 ### `npm test`
 
