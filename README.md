@@ -7,18 +7,18 @@ This is an ecommerce client side project. This project is build using MEARN stac
 Here are some of the screenshots of the project under development.
 
 **Authentication Management**
-Registration
+### Registration
 ![Registration](https://github.com/fkiptooh/client/blob/master/screenshots/registration%20page.png "Registration")
 
-Login Functionality
+### Login Functionality
 ![Login](https://github.com/fkiptooh/client/blob/master/screenshots/login%20functionality.png "Login")
 
 **Home Page**
-Home Page
+### Home Page
 ![Home Page](https://github.com/fkiptooh/client/blob/master/screenshots/home%20page.png "Home page")
 
 **Shop Page with filter functionalities**
-Shop Page
+### Shop Page
 ![Shop](https://github.com/fkiptooh/client/blob/master/screenshots/shop%20with%20filter%20functionality.png)
 
 Filter base on category.
@@ -31,11 +31,12 @@ Admin Functionalities
 Admin Managing Sub-Category instance; Update & Delete;
 ![Admin Sub-Category Management](https://github.com/fkiptooh/client/blob/master/screenshots/subcategory%20admin%20create%20and%20update%20functionality.png)
 
-`Rating Functionality`
+**Rating Functionality**
+### Rating
 ![Rating](https://github.com/fkiptooh/client/blob/master/screenshots/product%20rating%20for%20logged%20in%20users.png "Rating")
 
 **Add to cart functionality**
-Add to cart functionality
+### Add to cart functionality
 ![Cart](https://github.com/fkiptooh/client/blob/master/screenshots/cart%20section.png "Add to cart")
 
 
