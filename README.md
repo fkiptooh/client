@@ -6,23 +6,27 @@ This is an ecommerce client side project. This project is build using MEARN stac
 
 Here are some of the screenshots of the project under development.
 
-### `Screenshots`
+### `Authentication Management`
+Registration
+![Registration](https://github.com/fkiptooh/client/blob/master/screenshots/registration%20page.png "Registration")
+
+Login Functionality
+![Login](https://github.com/fkiptooh/client/blob/master/screenshots/login%20functionality.png "Login")
+
+### `Home Page`
 ![Home Page](https://github.com/fkiptooh/client/blob/master/screenshots/home%20page.png "Home page")
 
-### `npm test`
+### `Shop Page with filter functionalities`
+![Shop](https://github.com/fkiptooh/client/blob/master/screenshots/shop%20with%20filter%20functionality.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Filter base on category.
+![Filter](https://github.com/fkiptooh/client/blob/master/screenshots/filter%20based%20on%20categoty.png)
 
-### `npm run build`
+### `Admin Functionalities`
+![Admin Dashboard](https://github.com/fkiptooh/client/blob/master/screenshots/admin%20functionalities.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Admin Managing Sub-Category instance; Update & Delete;
+![Admin Sub-Category Management](https://github.com/fkiptooh/client/blob/master/screenshots/subcategory%20admin%20create%20and%20update%20functionality.png)
 
 ### `npm run eject`
 
