@@ -1,8 +1,8 @@
-# Getting Started with Create React App
+# An Ecommerce Client Web App. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is an ecommerce client side project. This project is build using MEARN stack technologies. The authentication bit is fired by firebase to easy user registation and login. The frontend is easy to use and redirects are streamlined to provide a good user experience.
 
-## Available Scripts
+## Project Demo Screen Shots
 
 In the project directory, you can run:
 
