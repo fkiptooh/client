@@ -2,17 +2,12 @@
 
 This is an ecommerce client side project. This project is build using MEARN stack technologies. The authentication bit is fired by firebase to easy user registation and login. The frontend is easy to use and redirects are streamlined to provide a good user experience.
 
-## Project Demo Screen Shots
+## Project Demo ScreenShots
 
-In the project directory, you can run:
+Here are some of the screenshots of the project under development.
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `HomePage`
+https://github.com/fkiptooh/client/blob/master/screenshots/home%20page.png
 
 ### `npm test`
 
