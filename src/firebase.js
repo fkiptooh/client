@@ -30,7 +30,7 @@ import "firebase/compat/storage";
 
 // fkiptooh.r
 const firebaseConfig = {
-  apiKey: "AIzaSyACtwE0LjhO1wFimtqFrfDBvP7_ELUmc_U",
+  apiKey: "AIzaSyACtwE0LjhO1wFimtqFrfDBvP7_ELUmc_U",firebase,
   authDomain: "ecommerce-8d7c9.firebaseapp.com",
   projectId: "ecommerce-8d7c9",
   storageBucket: "ecommerce-8d7c9.appspot.com",

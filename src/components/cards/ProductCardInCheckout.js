@@ -1,7 +1,9 @@
+/* eslint-disable array-callback-return */
 import React from "react";
 import ModalImage from 'react-modal-image';
 import { useDispatch } from "react-redux";
 import laptop from '../../images/laptop.png'
+import {toast} from 'react-toastify'
 
 const ProductCardInCheckout = ({p})=> {
 
@@ -27,6 +29,33 @@ const ProductCardInCheckout = ({p})=> {
                 type: "ADD_TO_CART",
                 payload: cart,
             });
+        }
+    }
+    const handleCountChange=(e)=>{
+        // console.log(`Maximum available quantity`, p.quantity)
+        let count = e.target.value < 1 ? 1 : e.target.value;
+        if(count > p.quantity){
+            toast.error(`Maximum available quantity ${p.quantity}`)
+            return;
+        }
+        let cart = [];
+
+        if(typeof window !== 'undefined'){
+            if(localStorage.getItem('cart')){
+                cart = JSON.parse(localStorage.getItem('cart'));
+            }
+
+            cart.map((product, i)=> {
+                if(product._id === p._id){
+                    cart[i].count = count;
+                }
+            });
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: cart,
+            })
         }
     }
     return(
@@ -58,7 +87,14 @@ const ProductCardInCheckout = ({p})=> {
                                         </option>))}
                     </select>
                 </td>
-                <td>{p.count}</td>
+                <td className="text-center">
+                    <input 
+                        type="number"
+                        value={p.count}
+                        onChange={handleCountChange}
+                        className="form-control"
+                    />
+                </td>
                 <td>Shipping Icon</td>
                 <td>Remove icon</td>
             </tr>

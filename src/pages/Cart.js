@@ -11,7 +11,7 @@ const Cart =()=>{
     const navigate = useNavigate();
 
     const showCartItems=()=> {
-  return (      <table className="table table-borded">
+  return (  <table className="table table-borded">
             <thead className="thead-light">
                 <tr>
                     <th scope="col">Image</th>
@@ -64,11 +64,11 @@ const Cart =()=>{
             <h4>Order summary</h4>
             <hr/>
             <p>Products</p>
-            {cart.map((c, i)=>(
+            {cart.map((c, i)=>
                 <div key={i}>
                     <p>{c.title} x {c.count} = Ksh {c.price * c.count}</p>
                 </div>
-            ))}
+            )}
             <hr/>
             Total: <b>Ksh {getTotal()}</b>
             <hr/>
