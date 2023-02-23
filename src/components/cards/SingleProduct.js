@@ -49,6 +49,12 @@ const SingleProduct = ({product, star, onStarRating}) => {
                 type: "ADD_TO_CART",
                 payload: unique,
             });
+
+            // show cart slider.
+            dispatch({
+                type: "SET_VISIBLE",
+                payload: true,
+            });
         }
     }
     

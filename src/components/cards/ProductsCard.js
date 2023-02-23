@@ -44,6 +44,12 @@ const ProductCard =({product})=> {
                 type: "ADD_TO_CART",
                 payload: unique,
             });
+
+            // show cart slider.
+            dispatch({
+                type: "SET_VISIBLE",
+                payload: true,
+            });
         }
     }
     return(<div>

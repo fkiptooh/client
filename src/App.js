@@ -11,6 +11,7 @@ import Protected from './components/routes/Protected';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import Home from './pages/Home';
+import SideDrawer from './components/drawer/SideDrawer';
 import RegisterComplete from './pages/auth/RegisterComplete';
 import Header from './components/nav/Header';
 import ForgotPassword from './pages/auth/ForgotPassword';
@@ -69,6 +70,7 @@ const App=()=> {
       <BrowserRouter>
       <>
       <Header/>
+      <SideDrawer/>
       {/* <Header/> */}
       <ToastContainer />
      

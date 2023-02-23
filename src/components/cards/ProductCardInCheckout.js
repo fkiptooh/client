@@ -4,6 +4,7 @@ import ModalImage from 'react-modal-image';
 import { useDispatch } from "react-redux";
 import laptop from '../../images/laptop.png'
 import {toast} from 'react-toastify'
+import { CheckCircleOutlined, CloseCircleFilled, CloseCircleOutlined, DeleteFilled, DeleteOutlined } from "@ant-design/icons";
 
 const ProductCardInCheckout = ({p})=> {
 
@@ -58,6 +59,25 @@ const ProductCardInCheckout = ({p})=> {
             })
         }
     }
+    const handleRemove =()=> {
+        let cart = [];
+        if(typeof window !== 'undefined'){
+            if(localStorage.getItem('cart')){
+                cart = JSON.parse(localStorage.getItem('cart'));
+            }
+            cart.map((product, i)=> {
+                if(product._id === p._id){
+                    cart.splice(i, 1);
+                }
+            });
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            dispatch({
+                type: "ADD_TO_CART",
+                payload: cart,
+            })
+        }
+    }
     return(
         <tbody>
             <tr>
@@ -95,8 +115,18 @@ const ProductCardInCheckout = ({p})=> {
                         className="form-control"
                     />
                 </td>
-                <td>Shipping Icon</td>
-                <td>Remove icon</td>
+                <td>
+                    {p.shipping === "Yes" ? 
+                        <CheckCircleOutlined 
+                        className="text-success"/> : 
+                        <CloseCircleOutlined
+                        className="text-danger"/>}
+                    </td>
+                <td>
+                    <DeleteOutlined
+                        onClick={handleRemove}
+                        className="text-danger pointer"/>
+                    </td>
             </tr>
         </tbody>
     )
