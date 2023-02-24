@@ -2,6 +2,7 @@ import React from "react";
 import {useSelector, useDispatch} from 'react-redux'
 import { Link, useNavigate } from "react-router-dom";
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
+import { userCart } from "../functions/user";
 
 const Cart =()=>{
     const user = useSelector((state)=> ({...state}));
@@ -44,7 +45,13 @@ const Cart =()=>{
     }
 
     const saveOrderToDb =()=> {
-        // 
+        // alert(`Save order to Db`);
+        userCart(cart, user.token)
+        .then(res =>{
+            console.log(`CART POST RES`, res);
+            if(res.data.ok) navigate(`/checkout`);
+        })
+        .catch(err => console.log(err));
     }
   return(
     <div className="container-fluid pt-4">

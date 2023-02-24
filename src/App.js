@@ -33,6 +33,7 @@ import CategoryHome from './pages/category/CategoryHome';
 import SubCategoryHome from './pages/subcategory/SubCategoryHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -85,6 +86,7 @@ const App=()=> {
             <Route path='/user/history' element={<History/>}/>
             <Route path='/user/password' element={<Password/>}/>
             <Route path='/user/wishlist' element={<Wishlist/>}/>
+            <Route path='/checkout' element={<Checkout/>}/>
           </Route>
           <Route element={<AdminRoute/>}>
             <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
@@ -95,6 +97,7 @@ const App=()=> {
             <Route path='/admin/product' element={<ProductCreate/>}/>
             <Route path='/admin/products' element={<AllProducts/>}/>
             <Route path='/admin/product/:slug' element={<ProductUpdate/>}/>
+            {/* <Route path='/checkout' element={<Checkout/>}/> */}
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
           <Route path="/product/:slug" element={<Product/>}/>
