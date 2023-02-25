@@ -81,10 +81,10 @@ const Cart =()=>{
             Total: <b>Ksh {getTotal()}</b>
             <hr/>
             {
-                user ? (
+                user.token ? (
                     <button 
                         onClick={saveOrderToDb} 
-                        className="btn btn-sm btn-primary mt-2"
+                        className="btn btn-sm btn-primary btn-raised mt-2"
                         disabled={!cart.length}
                         >
                         Checkout
@@ -94,7 +94,7 @@ const Cart =()=>{
                     <button 
                         onClick={redirectToSamePage} 
                         disabled={!cart.length}
-                        className="btn btn-sm btn-warning mt-2">
+                        className="btn btn-sm btn-warning btn-raised mt-2">
                         {/* <Link> */}
                             Login to Checkout
                         {/* </Link> */}

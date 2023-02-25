@@ -59,6 +59,9 @@ const Shop = () => {
         // setLoading(true)
         const delayed = setTimeout(()=> {
             filterProducts({query: text});
+            if(!text){
+                loadAllProducts();
+            }
         }, 300);
 
         return ()=> clearTimeout(delayed);
