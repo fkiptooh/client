@@ -97,7 +97,7 @@ const App=()=> {
             <Route path='/admin/product' element={<ProductCreate/>}/>
             <Route path='/admin/products' element={<AllProducts/>}/>
             <Route path='/admin/product/:slug' element={<ProductUpdate/>}/>
-            {/* <Route path='/checkout' element={<Checkout/>}/> */}
+            <Route path='/checkout' element={<Checkout/>}/>
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
           <Route path="/product/:slug" element={<Product/>}/>

@@ -5,7 +5,8 @@ import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
 import { userCart } from "../functions/user";
 
 const Cart =()=>{
-    const user = useSelector((state)=> ({...state}));
+    const user = useSelector((state)=> ({...state.user}));
+    console.log('user in the state',user);
     const cart = useSelector((state)=>(state.cart));
 
     const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const Cart =()=>{
             Total: <b>Ksh {getTotal()}</b>
             <hr/>
             {
-                user.user ? (
+                user ? (
                     <button 
                         onClick={saveOrderToDb} 
                         className="btn btn-sm btn-primary mt-2"
