@@ -34,6 +34,7 @@ import SubCategoryHome from './pages/subcategory/SubCategoryHome';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import CreateCouponPage from './pages/admin/coupon/CreateCouponPage';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -98,6 +99,7 @@ const App=()=> {
             <Route path='/admin/products' element={<AllProducts/>}/>
             <Route path='/admin/product/:slug' element={<ProductUpdate/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
+            <Route path='/admin/coupon' element={<CreateCouponPage/>}/>
           </Route>
           <Route path="/401" element={<UnauthorizedPage/>}/>
           <Route path="/product/:slug" element={<Product/>}/>
