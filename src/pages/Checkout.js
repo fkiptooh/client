@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { getUserCart, emptyUserCart, saveUserAddress } from "../functions/user";
+import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon } from "../functions/user";
 import ReactQuill from 'react-quill';
 import "react-quill/dist/quill.snow.css"
 
@@ -11,6 +11,10 @@ const Checkout =()=> {
     const [total, setTotal] = useState(0);
     const [address, setAddress] = useState("");
     const [savedAddress, setSavedAddress] = useState(false);
+    const [coupon, setCoupon] = useState("");
+    // Discount price
+    const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
+    const [discountErr, setDiscountErr] = useState("");
 
     const user = useSelector((state)=> ({...state.user}));
     let dispatch = useDispatch();
@@ -53,54 +57,103 @@ const Checkout =()=> {
         .then(res=>{
             setProducts([]);
             setTotal(0);
+            setTotalAfterDiscount(0);
+            setCoupon('');
             toast.success(`The cart is emptied, continues shopping`)
         });
     }
+
+    const showAddres =()=> 
+    <>
+        <ReactQuill value={address} onChange={setAddress}/>
+        <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
+            Save
+        </button>
+    </>
+
+    const showProductSummary=()=>
+    products.map((p, i)=> (
+        <div key={i}>
+            <p>
+                {p.product.title} ({p.color}) x {p.count} = {p.product.price * p.count}
+            </p>
+        </div>
+    ));
+
+    const applyDiscountCoupon =()=> {
+        console.log(`coupon to backend`, coupon);
+        applyCoupon(user.token, coupon).then(res=> {
+            console.log("RES ON COUPON", res.data)
+            if(res.data){
+                setTotalAfterDiscount(res.data);
+                // update redux coupon applied
+            }
+            // error
+            if(res.data.err){
+                setDiscountErr(res.data.err);
+                // update redux coupon applied
+            }
+        })
+    }
+
+    const showApplyCoupon=()=> 
+    <>
+        <input
+            type="text"
+            onChange={e => {
+                setCoupon(e.target.value);
+                setDiscountErr("")
+            }}
+            value={coupon}
+            className="form-control"
+        />
+        <br/>
+        <button onClick={applyDiscountCoupon} className="btn btn-outline-primary">apply</button>
+    </>
     return(
-        <div className="row">
-            <div className="col-md-6">
-                <h4>Delivery Address</h4>
-                <br/>
-                <br/>
-                <ReactQuill value={address} onChange={setAddress}/>
-                <button className="btn btn-primary mt-2" onClick={saveAddressToDb}>
-                    Save
-                </button>
-                <hr />
-                <h4>Got Coupon?</h4>
-                <br />
-                Coupon input and apply button button
-            </div>
-            <div className="col-md-6">
-                <h4>Order Save</h4>
-                <hr />
-                <p>Products Checkout Number: {products.length}</p>
-                <hr/>
-                {products.map((p, i)=> (
-                    <div key={i}>
-                        <p>
-                            {p.product.title} ({p.color}) x {p.count} = {p.product.price * p.count}
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-md-6">
+                    <h4>Delivery Address</h4>
+                    <br/>
+                    <br/>
+                    {showAddres()}
+                    <hr />
+                    <h4>Got Coupon?</h4>
+                    <br />
+                    {showApplyCoupon()}
+                    {discountErr && <p className="bg-danger p-2">{discountErr}</p>}
+                </div>
+                <div className="col-md-6">
+                    <h4>Order Save</h4>
+                    <hr />
+                    <p>Products Checkout Number: {products.length}</p>
+                    <hr/>
+                    {showProductSummary()}
+                    <hr />
+                    <p>Cart total: Ksh {total}</p>
+                    {totalAfterDiscount > 0 && (
+                        <p className="bg-success p-2">
+                            Discount Applied. Amount Payable is: Ksh {totalAfterDiscount}
                         </p>
-                    </div>
-                ))}
-                <hr />
-                <p>Cart total: Ksh {total}</p>
-                <div className="row">
-                    <div className="col-md-6">
-                        <button 
-                            disabled={!savedAddress || !products.length}
-                            className="btn btn-primary btn-raised">
-                            Place Order
-                        </button>
-                    </div>
-                    <div className="col-md-6">
-                        <button 
-                            className="btn btn-warning btn-raised"
-                            onClick={emptyCart}
-                            disabled={!products.length}
-                            >
-                                Empty Cart
+                    )}
+                    <div className="row">
+                        <div className="col-md-6">
+                            <button 
+                                disabled={!savedAddress || !products.length}
+                                className="btn btn-primary btn-raised">
+                                Place Order
                             </button>
+                        </div>
+                        <div className="col-md-6">
+                            <button 
+                                className="btn btn-warning btn-raised"
+                                onClick={emptyCart}
+                                disabled={!products.length}
+                                >
+                                    Empty Cart
+                                </button>
+                        </div>
                     </div>
                 </div>
             </div>

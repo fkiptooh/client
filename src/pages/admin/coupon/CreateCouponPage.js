@@ -14,6 +14,7 @@ const CreateCouponPage =()=> {
     const [discount, setDiscount] = useState("");
     const [loading, setLoading] = useState("");
     const [coupons, setCoupons] = useState([]);
+    const today = new Date();
 
     const user = useSelector((state)=> (state.user));
 
@@ -83,11 +84,11 @@ const CreateCouponPage =()=> {
                     </div>
                     <div className="form-group">
                         <label className="text-muted">Expiry</label>
-                       <DatePicker 
+                        <DatePicker 
                             className="form-control"
                             selected={expiry}
-                            // value={expiry}
                             onChange={(date)=> setExpiry(date)}
+                            minDate={today}
                             required
                             />
                     </div>
