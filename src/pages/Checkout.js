@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon } from "../functions/user";
 import ReactQuill from 'react-quill';
 import "react-quill/dist/quill.snow.css"
+import { useNavigate } from "react-router-dom";
 
 
 const Checkout =()=> {
@@ -18,6 +19,7 @@ const Checkout =()=> {
 
     const user = useSelector((state)=> ({...state.user}));
     let dispatch = useDispatch();
+    let navigate = useNavigate();
 
     useEffect(()=> {
         getUserCart(user.token)
@@ -86,12 +88,20 @@ const Checkout =()=> {
             console.log("RES ON COUPON", res.data)
             if(res.data){
                 setTotalAfterDiscount(res.data);
-                // update redux coupon applied
+                // update redux coupon applied true/false
+                dispatch({
+                    type: "COUPON_APPLIED",
+                    payload: true,
+                })
             }
             // error
             if(res.data.err){
                 setDiscountErr(res.data.err);
-                // update redux coupon applied
+                // update redux coupon applied true/false
+                dispatch({
+                    type: "COUPON_APPLIED",
+                    payload: false,
+                })
             }
         })
     }
@@ -141,6 +151,7 @@ const Checkout =()=> {
                         <div className="col-md-6">
                             <button 
                                 disabled={!savedAddress || !products.length}
+                                onClick={()=> navigate(`/payment`)}
                                 className="btn btn-primary btn-raised">
                                 Place Order
                             </button>

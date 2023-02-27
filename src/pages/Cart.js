@@ -13,7 +13,9 @@ const Cart =()=>{
     const navigate = useNavigate();
 
     const showCartItems=()=> {
-  return (  <table className="table table-borded">
+  return (  <div className="container-fluid">
+    <div className="row">
+    <table className="table table-borded">
             <thead className="thead-light">
                 <tr>
                     <th scope="col">Image</th>
@@ -27,7 +29,11 @@ const Cart =()=>{
                 </tr>  
             </thead>
             {cart.map((p)=>(<ProductCardInCheckout key={p._id} p={p}/>))}
-        </table>);
+        </table>
+    </div>
+
+  </div>
+        );
     }
 
     const getTotal=()=> {

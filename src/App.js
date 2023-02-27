@@ -35,6 +35,7 @@ import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import CreateCouponPage from './pages/admin/coupon/CreateCouponPage';
+import Payment from './pages/Payment';
 
 import { auth } from './firebase';
 import { useEffect } from 'react';
@@ -88,6 +89,7 @@ const App=()=> {
             <Route path='/user/password' element={<Password/>}/>
             <Route path='/user/wishlist' element={<Wishlist/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
+            <Route path='/payment' element={<Payment/>}/>
           </Route>
           <Route element={<AdminRoute/>}>
             <Route path='/admin/dashboard' element={<AdminDashboard/>}/>
