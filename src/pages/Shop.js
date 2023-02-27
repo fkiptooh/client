@@ -194,6 +194,7 @@ const Shop = () => {
         const showBrands=()=>
             brands.map((b)=>(<Radio 
                                 name={b}
+                                key={b}
                                 value={b}
                                 className="pb-1 pl-4 pr-4"
                                 checked={b === brand}
@@ -237,6 +238,7 @@ const Shop = () => {
                 <Radio
                     className="pb-1 pl-4 pr-4"
                     name={c}
+                    key={c}
                     value={c}
                     checked={c===color}
                     onChange={handleColor}
