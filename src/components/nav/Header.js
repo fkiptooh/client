@@ -1,4 +1,5 @@
 /* eslint-disable no-mixed-operators */
+import React, {useState} from 'react';
 import { AppstoreOutlined, 
          SettingOutlined, 
          UserAddOutlined, 
@@ -19,6 +20,8 @@ const Header = () => {
 
     const navigate =  useNavigate();
     let dispatch = useDispatch();
+    const [menuVisible, setMenuVisible] = useState(false);
+
     // const { user, cart } = useSelector((state) => ({
     //   user: {...state.user},
     //   cart: {...state.cart},
@@ -26,6 +29,10 @@ const Header = () => {
     const user = useSelector((state)=>({...state}))
     const cart = useSelector((state)=>(state.cart));
     // console.log(`length`, cart.length)
+
+    const toggleMenu = () => {
+      setMenuVisible(!menuVisible);
+    };
     
 
     const onClick = (e) => {
@@ -72,11 +79,11 @@ return (
       flexDirection: "row",
       justifyContent: "space-between",
     }}
+    className={`header-menu ${menuVisible ? 'visible' : ''}`}
   >
     <Menu
       mode="horizontal"
       style={{ display: "flex", flex: 1 }}
-      // onClick={() => {onClick()}}
       onClick={onClick}
       items={[
         {

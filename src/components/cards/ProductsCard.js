@@ -19,39 +19,41 @@ const ProductCard =({product})=> {
 
     const dispatch = useDispatch();
 
-    const handleAddToCart =()=> {
-        // create an array
-        let cart = [];
-        if(typeof window !== 'undefined'){
+    const handleAddToCart = () => {
+        if (product.quantity > 0) {
+          // create an array
+          let cart = [];
+          if (typeof window !== 'undefined') {
             // if the item is in the local storage then lets get it
-            if(localStorage.getItem('cart')){
-                cart = JSON.parse(localStorage.getItem('cart'));
+            if (localStorage.getItem('cart')) {
+              cart = JSON.parse(localStorage.getItem('cart'));
             }
             // push new product to cart
             cart.push({
-                ...product,
-                count: 1,
+              ...product,
+              count: 1,
             });
             // remove duplicates.
             let unique = _.uniqWith(cart, _.isEqual);
             // save it to the local storage 
-            // console.log(`unique`, unique)
             localStorage.setItem('cart', JSON.stringify(unique));
             // tooltip
             setTooltip("Added");
-
+      
             dispatch({
-                type: "ADD_TO_CART",
-                payload: unique,
+              type: "ADD_TO_CART",
+              payload: unique,
             });
-
+      
             // show cart slider.
             dispatch({
-                type: "SET_VISIBLE",
-                payload: true,
+              type: "SET_VISIBLE",
+              payload: true,
             });
+          }
         }
-    }
+      };
+      
     return(<div>
                {product && product.ratings && product.ratings.length > 0 ?
                     showAverage(product) :
@@ -69,9 +71,9 @@ const ProductCard =({product})=> {
                     <EyeOutlined className="text-warning"/> <br /> View Product
                 </Link>, 
                 <Tooltip title={tooltip}>
-                    <a onClick={handleAddToCart}>
+                    <a onClick={handleAddToCart} disabled={product.quantity < 1}>
                     <ShoppingCartOutlined className="text-danger"/> 
-                    <br/> Add to Cart
+                    <br/> {product.quantity < 1 ? "Out of Stock" : "Add to Cart"}
                 </a>
                 </Tooltip>
             ]}
