@@ -31,6 +31,9 @@ Here are some of the screenshots of the project under development.
 **Admin Managing Sub-Category instance; Update & Delete;**
 ![Admin Sub-Category Management](https://github.com/fkiptooh/client/blob/master/screenshots/subcategory%20admin%20create%20and%20update%20functionality.png)
 
+**Admin Managing/Aprroving Customer Order Status**
+![Admin Order Approval](https://github.com/fkiptooh/client/blob/master/screenshots/Admin%20Order%20Status%20Page%20Approval.png)
+
 ### Rating Functionality
 **Rating**
 ![Rating](https://github.com/fkiptooh/client/blob/master/screenshots/product%20rating%20for%20logged%20in%20users.png "Rating")
@@ -38,5 +41,9 @@ Here are some of the screenshots of the project under development.
 ### Add to cart functionality
 **Add to cart functionality**
 ![Cart](https://github.com/fkiptooh/client/blob/master/screenshots/cart%20section.png "Add to cart")
+
+### Customers' Purchase History On the Dashboard
+**Order History Page**
+![Order History](https://github.com/fkiptooh/client/blob/master/screenshots/User-Order-Page.png)
 
 
