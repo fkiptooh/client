@@ -131,10 +131,10 @@ const StripeCheckout =()=> {
                     }
                     actions={[
                         <>
-                            <DollarOutlined className="text-info"/> <br/> Total: Ksh {cartTotal}
+                            <DollarOutlined className="text-info"/> <br/> Total: Ksh {(cartTotal).toFixed(2)}
                         </>,
                         <>
-                        <CheckOutlined className="text-info"/> <br/> Total Payable: Ksh {payable}
+                        <CheckOutlined className="text-info"/> <br/> Total Payable: Ksh {(payable).toFixed(2)}
                         </>
                     ]}  
                 />

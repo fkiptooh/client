@@ -1,0 +1,16 @@
+.order-status-not-processed {
+    background-color: #f8d7da;
+  }
+  
+  .order-status-processing {
+    background-color: #fff3cd;
+  }
+  
+  .order-status-dispatched {
+    background-color: #cce5ff;
+  }
+  
+  .order-status-complete {
+    background-color: #d4edda;
+  }
+  

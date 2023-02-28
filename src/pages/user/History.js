@@ -7,6 +7,7 @@ import {toast} from 'react-toastify'
 import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
 import { PDFDownloadLink} from '@react-pdf/renderer';
 import Invoice from "../../components/order/Invoice";
+import '../../components/order/order.css'
 
 const History = () => {
     const [orders, setOrders] = useState([])
@@ -65,7 +66,7 @@ const History = () => {
     )
     const showEachOrders = () =>
       orders.map((order, i) => (
-        <div key={i} className="m-5 p-3 card">
+        <div key={i} className={`m-5 p-3 card order-status-${order.orderStatus.toLowerCase().replace(' ', '-')}`}>
          <ShowPaymentInfo order={order}/>
           {showOrderInTable(order)}
           <div className="row">
