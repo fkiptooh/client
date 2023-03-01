@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon } from "../functions/user";
+import { getUserCart, emptyUserCart, saveUserAddress, applyCoupon, createCashOrderForUser } from "../functions/user";
 import ReactQuill from 'react-quill';
 import "react-quill/dist/quill.snow.css"
 import { useNavigate } from "react-router-dom";
@@ -18,6 +18,7 @@ const Checkout =()=> {
     const [discountErr, setDiscountErr] = useState("");
 
     const user = useSelector((state)=> ({...state.user}));
+    const COD = useSelector((state)=> (state.COD));
     let dispatch = useDispatch();
     let navigate = useNavigate();
 
@@ -120,6 +121,13 @@ const Checkout =()=> {
         <br/>
         <button onClick={applyDiscountCoupon} className="btn btn-outline-primary">apply</button>
     </>
+    const createCashOrder=()=> {
+        createCashOrderForUser(user.token, COD).then(res=>{
+            console.log("CREATE USER CASH ORDER RES", res)
+            // empty local, redux and backend cart, reset coupon
+        })
+
+    }
     return(
         <div className="container-fluid">
             <div className="row">
@@ -149,12 +157,22 @@ const Checkout =()=> {
                     )}
                     <div className="row">
                         <div className="col-md-6">
+                           {COD ? 
+                           (
                             <button 
-                                disabled={!savedAddress || !products.length}
-                                onClick={()=> navigate(`/payment`)}
-                                className="btn btn-primary btn-raised">
-                                Place Order
-                            </button>
+                            disabled={!savedAddress || !products.length}
+                            onClick={createCashOrder}
+                            className="btn btn-primary btn-raised">
+                            Place Order
+                        </button>
+                           ) : (
+                            <button 
+                            disabled={!savedAddress || !products.length}
+                            onClick={()=> navigate(`/payment`)}
+                            className="btn btn-primary btn-raised">
+                            Place Order
+                        </button>
+                           )}
                         </div>
                         <div className="col-md-6">
                             <button 

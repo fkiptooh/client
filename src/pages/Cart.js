@@ -60,6 +60,21 @@ const Cart =()=>{
         })
         .catch(err => console.log(err));
     }
+
+    // saveCashOrderToDb
+    const saveCashOrderToDb =()=> {
+        // alert(`Save order to Db`);
+        dispatch({
+            type: "COD",
+            payload: true,
+        })
+        userCart(cart, user.token)
+        .then(res =>{
+            console.log(`CART POST RES`, res);
+            if(res.data.ok) navigate(`/checkout`);
+        })
+        .catch(err => console.log(err));
+    }
   return(
     <div className="container-fluid pt-4">
     <div className="row">
@@ -88,13 +103,23 @@ const Cart =()=>{
             <hr/>
             {
                 user.token ? (
-                    <button 
-                        onClick={saveOrderToDb} 
-                        className="btn btn-sm btn-primary btn-raised mt-2"
-                        disabled={!cart.length}
-                        >
-                        Checkout
+                    <>
+                        <button 
+                            onClick={saveOrderToDb} 
+                            className="btn btn-sm btn-primary btn-raised mt-2"
+                            disabled={!cart.length}
+                            >
+                            Checkout With Stripe 
+                        </button>
+                        <br/>
+                        <button 
+                            onClick={saveCashOrderToDb} 
+                            className="btn btn-sm btn-primary btn-raised mt-2"
+                            disabled={!cart.length}
+                            >
+                        Pay On Delivery.
                     </button>
+                    </>
                 ) :
                 (
                     <button 
