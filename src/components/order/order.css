@@ -14,3 +14,11 @@
     background-color: #d4edda;
   }
   
+  .order-status-cancelled {
+    background-color: #fc2408;
+  }
+
+  .order-status-cash-on-delivery {
+    background-color: #da5315;
+  }
+  

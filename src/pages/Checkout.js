@@ -19,6 +19,8 @@ const Checkout =()=> {
 
     const user = useSelector((state)=> ({...state.user}));
     const COD = useSelector((state)=> (state.COD));
+    const coupons = useSelector((state)=> (state.coupon));
+
     let dispatch = useDispatch();
     let navigate = useNavigate();
 
@@ -122,9 +124,36 @@ const Checkout =()=> {
         <button onClick={applyDiscountCoupon} className="btn btn-outline-primary">apply</button>
     </>
     const createCashOrder=()=> {
-        createCashOrderForUser(user.token, COD).then(res=>{
+        createCashOrderForUser(user.token, COD, coupons).then(res=>{
             console.log("CREATE USER CASH ORDER RES", res)
             // empty local, redux and backend cart, reset coupon
+            if(res.data.ok){
+                // empty local storage
+                if(typeof window !== 'undefined') localStorage.removeItem('cart');
+
+                // empty redux
+                dispatch({
+                    type: "ADD_TO_CART",
+                    payload: [],
+                });
+
+                // clear coupon
+                dispatch({
+                    type: "COUPON_APPLIED",
+                    payload: false,
+                });
+                
+                // clear cash on delivery state
+                dispatch({
+                    type: "COD",
+                    payload: false,
+                });
+
+                // perform redirect
+                setTimeout(()=> {
+                    navigate('/user/history');
+                }, 1000)
+            }
         })
 
     }
