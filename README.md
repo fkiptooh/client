@@ -50,6 +50,6 @@ Here are some of the screenshots of the project under development.
 
 ### Payment Integration
 **Stripe**
-
+![Payment](https://github.com/fkiptooh/client/blob/master/screenshots/Payment.png)
 
 
