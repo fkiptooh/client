@@ -1,6 +1,6 @@
 # An Ecommerce Client Web App. 
 
-This is an ecommerce client side project. This project is build using MEARN stack technologies. The authentication bit is fired by firebase to easy user registation and login. I have also integrated cloudinary to save image and retrieve them to our app in reasonable sizes. The frontend is easy to use and redirects are streamlined to provide a good user experience. The project currently support ratings on products for logged in users, add to cart funtionality that that is fully functional and empties once the order has been made. The project now has stripe payment module integrated and cash on delivery plan supported for the customers within the bussiness premises. Looking forward to integrate Lipa na Mpesa a Safaricom Service provide payment API. 
+This is an ecommerce client side project. This project is build using MEARN stack technologies. The authentication bit is fired by firebase to easy user registation and login. I have also integrated cloudinary to save images and retrieve them to our app in reasonable sizes. The frontend is easy to use and redirects are streamlined to provide a good user experience. The project currently support ratings on products for logged in users, add to cart funtionality that that is fully functional and empties once the order has been made. I have also integrate the coupon applied funtionality, the coupons are created by the admin and customers can apply them to have discounts when buying products. The project now has stripe payment module integrated and cash on delivery plan supported for the customers within the bussiness premises. Looking forward to integrate Lipa na Mpesa, a Safaricom Service provider payment API.
 
 ## Project Demo ScreenShots
 
@@ -42,8 +42,14 @@ Here are some of the screenshots of the project under development.
 **Add to cart functionality**
 ![Cart](https://github.com/fkiptooh/client/blob/master/screenshots/cart%20section.png "Add to cart")
 
+###
+
 ### Customers' Purchase History On the Dashboard
 **Order History Page**
 ![Order History](https://github.com/fkiptooh/client/blob/master/screenshots/User-Order-Page.png)
+
+### Payment Integration
+**Stripe**
+
 
 
