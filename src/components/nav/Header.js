@@ -8,7 +8,7 @@ import { AppstoreOutlined,
          ShoppingOutlined,
          ShoppingCartOutlined,
         } from '@ant-design/icons';
-import { Badge, Menu , Avatar} from 'antd';
+import { Badge, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,19 +20,13 @@ const Header = () => {
 
     const navigate =  useNavigate();
     let dispatch = useDispatch();
-    const [menuVisible, setMenuVisible] = useState(false);
-
-    // const { user, cart } = useSelector((state) => ({
-    //   user: {...state.user},
-    //   cart: {...state.cart},
-    // }));
+    const [menuVisible] = useState(false);
     const user = useSelector((state)=>({...state}))
     const cart = useSelector((state)=>(state.cart));
-    // console.log(`length`, cart.length)
 
-    const toggleMenu = () => {
-      setMenuVisible(!menuVisible);
-    };
+    // const toggleMenu = () => {
+    //   setMenuVisible(!menuVisible);
+    // };
     
 
     const onClick = (e) => {
@@ -97,7 +91,6 @@ return (
           icon: <ShoppingOutlined />,
         },
         {
-          // label: <span>Cart <Badge count={cart.length} offset={[9,0]}/></span>,
           label: <Badge count={cart.length} offset={[9, 0]}><span>Cart</span></Badge>,
           key: "cart",
           icon: <ShoppingCartOutlined />,
